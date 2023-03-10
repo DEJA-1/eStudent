@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,9 +21,12 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.estudent.R
+import com.example.estudent.common.TEST_TAG_DUTY_ROW
 import com.example.estudent.common.TEST_TAG_HOME_SCREEN
 import com.example.estudent.common.TEST_TAG_TASKS_SCREEN
 import com.example.estudent.navigation.Screen
+import com.example.estudent.presentation.screen.common_components.Duty
 import com.example.estudent.presentation.screen.common_components.DutyRow
 import com.example.estudent.ui.theme.HomeScreenColorPaletteLight
 import com.example.estudent.ui.theme.mBackgroundBlack
@@ -51,11 +55,17 @@ fun HomeScreen(
                     DutyRow(
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
-                            .height(50.dp)
+                            .testTag(TEST_TAG_DUTY_ROW),
+                        duty = Duty(
+                            dutyTitle = "Object oriented programming assignment",
+                            dutyDescription = "Wykonac zadanie 2 z listy laboratorium 2",
+                            dutyCategory = "Moderate",
+                            dutyDeadline = "11.03.23"
+                        )
                     )
 
                     Text(
-                        text = "Due tomorrow!",
+                        text = stringResource(R.string.due_tomorrow_string),
                         fontStyle = FontStyle.Italic,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.subtitle2,
@@ -73,13 +83,13 @@ fun HomeScreen(
 fun MyHeader() {
     Column() {
         Text(
-            text = "Hello!",
+            text = stringResource(R.string.hello_string),
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.h6
         )
 
         Text(
-            text = "You got this!",
+            text = stringResource(R.string.you_got_this_string),
             style = MaterialTheme.typography.h6,
             fontWeight = FontWeight.Light
         )
