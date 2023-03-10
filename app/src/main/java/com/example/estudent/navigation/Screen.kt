@@ -9,30 +9,28 @@ import com.example.estudent.R
 
 sealed class Screen(
     val route: String,
-    val title: String,
-    val icon: Int,
 ) {
     object Home : Screen(
         route = "home_screen",
-        title = "Home",
-        icon = R.drawable.baseline_home_24
+//        title = "Home",
+//        icon = R.drawable.baseline_home_24
     )
 
     object Projects : Screen(
         route = "projects_screen",
-        title = "Projects",
-        icon = R.drawable.projects
+//        title = "Projects",
+//        icon = R.drawable.projects
     )
 
     object Tasks : Screen(
         route = "tasks_screen",
-        title = "Tasks",
-        icon = R.drawable.tasks
+//        title = "Tasks",
+//        icon = R.drawable.tasks
     )
 
     object Exams : Screen(
         route = "exams_screen",
-        title = "Exams",
-        icon = R.drawable.exams
+//        title = "Exams",
+//        icon = R.drawable.exams
     )
 }

@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,59 +20,52 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.estudent.common.TEST_TAG_HOME_SCREEN
+import com.example.estudent.common.TEST_TAG_TASKS_SCREEN
 import com.example.estudent.navigation.Screen
 import com.example.estudent.presentation.screen.common_components.DutyRow
-import com.example.estudent.ui.theme.HomeScreenColorPalette
+import com.example.estudent.ui.theme.HomeScreenColorPaletteLight
 import com.example.estudent.ui.theme.mBackgroundBlack
 
 @Composable
 fun HomeScreen(
-
+    modifier: Modifier = Modifier
 ) {
-    MaterialTheme(colors = HomeScreenColorPalette) {
+    MaterialTheme(colors = HomeScreenColorPaletteLight) {
 
-        Scaffold(
-            topBar = {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 8.dp, top = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    MyHeader()
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        DutyRow(
-                            modifier = Modifier
-                                .fillMaxWidth(0.6f)
-                                .height(50.dp)
-                        )
-
-                        Text(
-                            text = "Due tomorrow!",
-                            fontStyle = FontStyle.Italic,
-                            fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.subtitle2,
-                            textAlign = TextAlign.Center
-                        )
-
-                    }
-                }
-
-            },
-
-
-            ) { paddingValues ->
-            Column(
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .testTag(TEST_TAG_HOME_SCREEN)
+        ) {
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, top = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                MyHeader()
 
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    DutyRow(
+                        modifier = Modifier
+                            .fillMaxWidth(0.6f)
+                            .height(50.dp)
+                    )
+
+                    Text(
+                        text = "Due tomorrow!",
+                        fontStyle = FontStyle.Italic,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.subtitle2,
+                        textAlign = TextAlign.Center
+                    )
+
+                }
             }
         }
+
     }
 }
 

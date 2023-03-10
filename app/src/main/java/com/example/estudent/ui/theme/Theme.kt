@@ -29,20 +29,27 @@ private val LightColorPalette = lightColors(
     */
 )
 
-val HomeScreenColorPalette = darkColors(
+val HomeScreenColorPaletteDark = darkColors(
     background = mBackgroundBlack,
     onBackground = mTextWhite,
     surface = mBackgroundBlackSecondary,
-    primary = Color.Red
+    primary = mGreen
+)
+
+val HomeScreenColorPaletteLight = lightColors(
+    background = mBackgroundBlack,
+    onBackground = mTextWhite,
+    surface = mBackgroundBlackSecondary,
+    primary = mGreen
 )
 
 @Composable
 fun EStudentTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
 
     val colors = if (darkTheme) {
-        DarkColorPalette
+        HomeScreenColorPaletteDark
     } else {
-        LightColorPalette
+        HomeScreenColorPaletteLight
     }
 
     MaterialTheme(
