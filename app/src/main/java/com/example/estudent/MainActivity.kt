@@ -19,7 +19,9 @@ import com.example.estudent.navigation.BottomNavigationBar
 import com.example.estudent.navigation.MyNavHost
 import com.example.estudent.navigation.Screen
 import com.example.estudent.ui.theme.EStudentTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

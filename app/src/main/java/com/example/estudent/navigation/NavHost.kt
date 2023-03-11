@@ -3,6 +3,7 @@ package com.example.estudent.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
@@ -15,6 +16,7 @@ import com.example.estudent.common.TEST_TAG_PROJECTS_SCREEN
 import com.example.estudent.common.TEST_TAG_TASKS_SCREEN
 import com.example.estudent.presentation.screen.exams.ExamsScreen
 import com.example.estudent.presentation.screen.home.HomeScreen
+import com.example.estudent.presentation.screen.home.HomeViewModel
 import com.example.estudent.presentation.screen.projects.ProjectsScreen
 import com.example.estudent.presentation.screen.tasks.TasksScreen
 
@@ -28,8 +30,9 @@ fun MyNavHost(
         composable(
             route = Screen.Home.route
         ) {
+            val viewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(
-
+                viewModel = viewModel
             )
         }
 
