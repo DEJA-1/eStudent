@@ -5,15 +5,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import com.example.estudent.domain.model.Duty
+import com.example.estudent.presentation.screen.common_components.DutyRowShrank
 
 @Composable
 fun ImportantAndUpcomingSection(
     duty: Duty,
     duty1: Duty,
-    duty2: Duty
+    duty2: Duty,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -21,34 +21,42 @@ fun ImportantAndUpcomingSection(
     ) {
 
         DutiesSection(
-            duties = listOf(duty, duty1, duty),
-            modifier = Modifier.fillMaxWidth(0.4f),
-            text = "Important"
-        ) { duties ->
+            duties = listOf(duty, duty1, duty2),
+            modifier = Modifier.fillMaxWidth(0.46f),
+            text = "Important",
+            dutiesSection = { duties ->
 
-            DutiesColumn(
-                duties = duties,
-                minHeightDp = 30,
-                isScaled = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .scale(-1f)
-            )
-        }
+                DutiesColumn(
+                    duties = duties,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    content = { duty ->
+                        DutyRowShrank(
+                            duty = duty
+                        )
+                    }
+                )
+            }
+        )
 
         DutiesSection(
             duties = listOf(duty2, duty2),
-            text = "Upcoming"
-        ) { duties ->
+            text = "Upcoming",
+            dutiesSection = { duties ->
 
-            DutiesColumn(
-                duties = duties,
-                minHeightDp = 70,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
+                DutiesColumn(
+                    duties = duties,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    content = { duty ->
+                        DutyRowShrank(
+                            duty = duty
+                        )
+                    }
+                )
 
-        }
+            }
+        )
 
     }
 }

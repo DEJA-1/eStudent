@@ -20,7 +20,7 @@ fun DutiesSection(
     duties: List<Duty>,
     modifier: Modifier = Modifier,
     text: String,
-    columnSpacedByDp: Int = 4,
+    columnSpacedByDp: Int = 8,
     dutiesSection: @Composable (List<Duty>) -> Unit
 ) {
     Column(
@@ -33,7 +33,7 @@ fun DutiesSection(
             text = text,
             color = mTextWhite,
             textAlign = TextAlign.Center,
-            fontSize = 16.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic
         )

@@ -1,37 +1,43 @@
 package com.example.estudent.presentation.screen.home.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.example.estudent.R
-import com.example.estudent.common.TEST_TAG_DUTY_ROW
-import com.example.estudent.domain.model.Duty
-import com.example.estudent.presentation.screen.common_components.DutyRow
 
 @Composable
 fun HomeHeader(
     modifier: Modifier = Modifier,
-    duty: Duty,
+    onProfileClicked: () -> Unit,
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         GreetingText()
 
-        DueTomorrowDuty(
-            duty = duty
+        Icon(
+            modifier = Modifier
+                .clip(CircleShape)
+                .size(64.dp)
+                .clickable {
+                    onProfileClicked()
+                },
+            imageVector = Icons.Default.AccountCircle, contentDescription = "Profile icon",
+            tint = MaterialTheme.colors.onBackground
         )
     }
 }
@@ -49,30 +55,6 @@ fun GreetingText() {
             text = stringResource(R.string.you_got_this_string),
             style = MaterialTheme.typography.h6,
             fontWeight = FontWeight.Light
-        )
-    }
-}
-
-@Composable
-fun DueTomorrowDuty(
-    duty: Duty
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        DutyRow(
-            modifier = Modifier
-                .fillMaxWidth(0.6f)
-                .testTag(TEST_TAG_DUTY_ROW),
-            duty = duty
-        )
-
-        Text(
-            text = stringResource(R.string.due_tomorrow_string),
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.subtitle2,
-            textAlign = TextAlign.Center
         )
     }
 }

@@ -2,8 +2,11 @@ package com.example.estudent
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -12,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.estudent.common.TEST_TAG_BOTTOM_NAVIGATION_BAR
 import com.example.estudent.navigation.BottomNavItem
@@ -35,6 +39,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
+    val backStackEntry = navController.currentBackStackEntryAsState()
+    val currentDestination = backStackEntry.value?.destination
+
     val buttonNavItems = listOf(
         BottomNavItem(
             name = "Home",
@@ -65,12 +72,20 @@ fun MyApp() {
         Scaffold(
             bottomBar = {
                 BottomNavigationBar(
-                    modifier = Modifier.clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.1f)
                         .testTag(TEST_TAG_BOTTOM_NAVIGATION_BAR),
                     items = buttonNavItems,
-                    navController = navController,
+                    currentDestination = currentDestination,
                     onItemClick = {
-                        navController.navigate(it.route + "/${it.name}")
+                        if (it.name == "Home") {
+                            navController.navigate(it.route)
+                            Log.d("TEST", currentDestination.toString())
+                        } else {
+                            navController.navigate(it.route + "/${it.name}")
+                            Log.d("TEST", currentDestination.toString())
+                        }
                     }
                 )
             }

@@ -2,6 +2,7 @@ package com.example.estudent.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -22,33 +23,38 @@ import com.example.estudent.ui.theme.mBackgroundBlack
 @Composable
 fun BottomNavigationBar(
     items: List<BottomNavItem>,
-    navController: NavController,
+    currentDestination: NavDestination?,
     modifier: Modifier = Modifier,
-    onItemClick: (BottomNavItem) -> Unit
+    onItemClick: (BottomNavItem) -> Unit,
 ) {
-    val backStackEntry = navController.currentBackStackEntryAsState()
+    var selected: Boolean
+    val currentRoute = currentDestination?.route?.split('/')?.first()
 
     BottomNavigation(
         modifier = modifier,
-        backgroundColor = Color.White,
-        elevation = 5.dp
+        elevation = 55.dp,
+        backgroundColor = Color.Transparent
     ) {
         items.forEach { item ->
 
-            val selected = item.route == backStackEntry.value?.destination?.route
+            selected = currentDestination?.hierarchy?.any {
+                currentRoute == item.route
+            } == true
 
             BottomNavigationItem(
                 onClick = { onItemClick(item) },
                 selected = selected,
-                selectedContentColor = MaterialTheme.colors.primary,
-                unselectedContentColor = MaterialTheme.colors.background,
-                alwaysShowLabel = false,
+                selectedContentColor = Color.White,
+                unselectedContentColor = MaterialTheme.colors.onBackground,
                 icon = {
                     Column(
                         horizontalAlignment = CenterHorizontally
                     ) {
-                        Icon(painter = painterResource(id = item.icon),
-                            contentDescription = "Navigation icon ${item.name}" )
+                        Icon(
+                            painter = painterResource(id = item.icon),
+                            contentDescription = "Navigation icon ${item.name}",
+                            modifier = Modifier.size(32.dp)
+                        )
 
                         if (selected) {
                             Text(text = item.name)

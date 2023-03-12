@@ -7,9 +7,10 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
+    primary = mBackgroundBlack,
     primaryVariant = Purple700,
     secondary = Teal200
 )
@@ -45,6 +46,7 @@ val HomeScreenColorPaletteLight = lightColors(
 
 @Composable
 fun EStudentTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+    val systemUiController = rememberSystemUiController()
 
     val colors = if (darkTheme) {
         HomeScreenColorPaletteDark
@@ -52,10 +54,14 @@ fun EStudentTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
         HomeScreenColorPaletteLight
     }
 
+
     MaterialTheme(
         colors = colors,
         typography = Typography,
         shapes = Shapes,
         content = content
     )
+
+    // TODO change systemBarColor for equivalent theme
+    systemUiController.setSystemBarsColor(mBackgroundBlack)
 }

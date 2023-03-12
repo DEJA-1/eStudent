@@ -4,9 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.estudent.common.Constants
 import com.example.estudent.common.Resource
-import com.example.estudent.domain.model.Duty
 import com.example.estudent.domain.use_case.GetDutiesByCategoryUseCase
-import com.example.estudent.presentation.state.DutyListState
+import com.example.estudent.presentation.state.DutyUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +19,7 @@ class ProjectsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DutyListState())
+    private val _uiState = MutableStateFlow(DutyUiState())
     val uiState = _uiState.asStateFlow()
 
     val category = savedStateHandle.get<String>(Constants.PARAM_CATEGORY) ?: ""

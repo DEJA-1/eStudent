@@ -3,7 +3,7 @@ package com.example.estudent.presentation.screen.home
 import androidx.lifecycle.ViewModel
 import com.example.estudent.common.Resource
 import com.example.estudent.domain.use_case.GetAllDutiesUseCase
-import com.example.estudent.presentation.state.DutyListState
+import com.example.estudent.presentation.state.DutyUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +16,7 @@ class HomeViewModel @Inject constructor(
     private val getAllDutiesUseCase: GetAllDutiesUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DutyListState())
+    private val _uiState = MutableStateFlow(DutyUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
