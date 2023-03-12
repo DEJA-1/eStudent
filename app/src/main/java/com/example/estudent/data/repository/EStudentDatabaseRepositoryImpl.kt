@@ -13,20 +13,28 @@ class EStudentDatabaseRepositoryImpl @Inject constructor(
     private val dao: EStudentDao
 ) : EStudentDatabaseRepository {
 
-    override suspend fun insertDutyToDatabase(duty: Duty) {
-        dao.insertDutyToDatabase(duty)
+    override suspend fun insertDuty(duty: Duty) {
+        dao.insertDuty(duty)
     }
 
-    override suspend fun deleteDutyFromDatabase(duty: Duty) {
-        dao.deleteDutyFromDatabase(duty)
+    override suspend fun deleteDuty(duty: Duty) {
+        dao.deleteDuty(duty)
     }
 
-    override fun getAllDutiesFromDatabase(): Flow<Resource<List<Duty>>> = flow {
+    override fun getAllDuties(): Flow<Resource<List<Duty>>> = flow {
         try {
             emit(Resource.Loading())
+            val duties = dao.getAllDuties().firstOrNull()
+            emit(Resource.Success(duties ?: emptyList()))
+        } catch (e: Exception) {
+            emit(Resource.Error("Database Error: ${e.message}"))
+        }
+    }
 
-            val duties = dao.getAllDutiesFromDatabase().firstOrNull()
-
+    override fun getDutiesByCategory(category: String): Flow<Resource<List<Duty>>> = flow {
+        try {
+            emit(Resource.Loading())
+            val duties = dao.getDutiesByCategory(category = category).firstOrNull()
             emit(Resource.Success(duties ?: emptyList()))
         } catch (e: Exception) {
             emit(Resource.Error("Database Error: ${e.message}"))

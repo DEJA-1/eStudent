@@ -9,11 +9,14 @@ import kotlinx.coroutines.flow.Flow
 interface EStudentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDutyToDatabase(duty: Duty)
+    suspend fun insertDuty(duty: Duty)
 
     @Delete
-    suspend fun deleteDutyFromDatabase(duty: Duty)
+    suspend fun deleteDuty(duty: Duty)
 
     @Query("SELECT * FROM duty_table")
-    fun getAllDutiesFromDatabase(): Flow<List<Duty>>
+    fun getAllDuties(): Flow<List<Duty>>
+    
+    @Query("SELECT * FROM duty_table WHERE category = :category")
+    fun getDutiesByCategory(category: String): Flow<List<Duty>>
 }

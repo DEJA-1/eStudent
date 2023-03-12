@@ -6,9 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface EStudentDatabaseRepository {
 
-    suspend fun insertDutyToDatabase(duty: Duty)
-
-    suspend fun deleteDutyFromDatabase(duty: Duty)
-
-    fun getAllDutiesFromDatabase(): Flow<Resource<List<Duty>>>
+    suspend fun insertDuty(duty: Duty)
+    suspend fun deleteDuty(duty: Duty)
+    fun getAllDuties(): Flow<Resource<List<Duty>>>
+    fun getDutiesByCategory(category: String): Flow<Resource<List<Duty>>>
 }

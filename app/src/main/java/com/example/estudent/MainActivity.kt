@@ -70,7 +70,7 @@ fun MyApp() {
                     items = buttonNavItems,
                     navController = navController,
                     onItemClick = {
-                        navController.navigate(it.route)
+                        navController.navigate(it.route + "/${it.name}")
                     }
                 )
             }

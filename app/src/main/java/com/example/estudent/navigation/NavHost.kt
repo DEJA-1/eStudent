@@ -18,6 +18,7 @@ import com.example.estudent.presentation.screen.exams.ExamsScreen
 import com.example.estudent.presentation.screen.home.HomeScreen
 import com.example.estudent.presentation.screen.home.HomeViewModel
 import com.example.estudent.presentation.screen.projects.ProjectsScreen
+import com.example.estudent.presentation.screen.projects.ProjectsViewModel
 import com.example.estudent.presentation.screen.tasks.TasksScreen
 
 @Composable
@@ -31,21 +32,18 @@ fun MyNavHost(
             route = Screen.Home.route
         ) {
             val viewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen(
-                viewModel = viewModel
-            )
+            HomeScreen(viewModel = viewModel)
         }
 
         composable(
-            route = Screen.Projects.route
+            route = Screen.Projects.route + "/{category}"
         ) {
-            ProjectsScreen(
-
-            )
+            val viewModel = hiltViewModel<ProjectsViewModel>()
+            ProjectsScreen(viewModel = viewModel)
         }
 
         composable(
-            route = Screen.Tasks.route
+            route = Screen.Tasks.route + "/{category}"
         ) {
             TasksScreen(
 
@@ -53,7 +51,7 @@ fun MyNavHost(
         }
 
         composable(
-            route = Screen.Exams.route
+            route = Screen.Exams.route + "/{category}"
         ) {
             ExamsScreen(
 

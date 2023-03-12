@@ -12,7 +12,7 @@ import com.example.estudent.common.TEST_TAG_PROJECTS_SCREEN
 
 @Composable
 fun ProjectsScreen(
-
+    viewModel: ProjectsViewModel
 ) {
 
     Box(
@@ -20,6 +20,6 @@ fun ProjectsScreen(
             .testTag(TEST_TAG_PROJECTS_SCREEN),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Projects Screen")
+        Text(text = viewModel.category)
     }
 }

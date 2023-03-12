@@ -3,6 +3,8 @@ package com.example.estudent.presentation.screen.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
@@ -22,6 +24,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel
 ) {
+
+    val uiState by viewModel.uiState.collectAsState()
 
     val duty = Duty(
         title = "Object oriented programming assignment",
