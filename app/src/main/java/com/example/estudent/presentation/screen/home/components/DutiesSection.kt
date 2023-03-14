@@ -35,7 +35,6 @@ fun DutiesSection(
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic
         )
 
         dutiesSection(duties)

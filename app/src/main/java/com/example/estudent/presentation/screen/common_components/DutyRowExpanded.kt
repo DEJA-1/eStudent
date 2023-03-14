@@ -28,26 +28,25 @@ import com.example.estudent.ui.theme.mBackgroundBlack
 import com.example.estudent.ui.theme.mGreen
 import com.example.estudent.ui.theme.mRed
 import com.example.estudent.ui.theme.mTextWhite
+import com.example.estudent.util.getDisplayDate
 import com.example.estudent.util.getRowColor
 
-@Preview
 @Composable
 fun DutyRowExpanded(
     modifier: Modifier = Modifier,
-    duty: Duty = Duty(),
+    duty: Duty,
+    onCheckClicked: (Duty) -> Unit,
 ) {
 
     val circleColor = getRowColor(duty.deadline)
-    val borderCheckColor = remember {
-        mutableStateOf(mTextWhite)
-    }
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.2f)
+            .heightIn(min = 50.dp)
             .padding(bottom = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = CenterVertically
     ) {
 
         Row(
@@ -59,10 +58,10 @@ fun DutyRowExpanded(
                     .size(42.dp)
                     .clip(CircleShape)
                     .background(
-                        if (borderCheckColor.value == mTextWhite)
-                            circleColor
-                        else
+                        if (duty.isCompleted)
                             circleColor.copy(0.3f)
+                        else
+                            circleColor
                     )
             )
 
@@ -76,23 +75,22 @@ fun DutyRowExpanded(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     fontStyle = FontStyle.Italic,
-                    color =
-                    if (borderCheckColor.value == mTextWhite)
-                        mTextWhite
+                    color = if (duty.isCompleted)
+                        MaterialTheme.colors.onBackground.copy(0.3f)
                     else
-                        mTextWhite.copy(0.3f),
+                        MaterialTheme.colors.onBackground,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
                 Text(
-                    text = duty.deadline,
+                    text = getDisplayDate(duty.deadline),
                     fontSize = 12.sp,
                     fontStyle = FontStyle.Italic,
-                    color = if (borderCheckColor.value == mTextWhite)
-                        mTextWhite
+                    color = if (duty.isCompleted)
+                        MaterialTheme.colors.onBackground.copy(0.3f)
                     else
-                        mTextWhite.copy(0.3f),
+                        MaterialTheme.colors.onBackground,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -106,17 +104,19 @@ fun DutyRowExpanded(
                 .size(20.dp)
                 .clip(CircleShape)
                 .background(
-                    if (borderCheckColor.value == mTextWhite)
-                        Color.Transparent
-                    else
+                    if (duty.isCompleted)
                         mGreen
-                )
-                .border(width = 2.dp, color = borderCheckColor.value, shape = CircleShape)
-                .clickable {
-                    if (borderCheckColor.value == mTextWhite)
-                        borderCheckColor.value = mGreen
                     else
-                        borderCheckColor.value = mTextWhite
+                        Color.Transparent
+                )
+                .border(
+                    width = 2.dp, color = if (duty.isCompleted)
+                        mGreen
+                    else
+                        MaterialTheme.colors.onBackground, shape = CircleShape
+                )
+                .clickable {
+                    onCheckClicked(duty)
                 }
         )
 

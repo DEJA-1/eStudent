@@ -20,13 +20,13 @@ import androidx.compose.ui.unit.sp
 import com.example.estudent.domain.model.Duty
 
 import com.example.estudent.ui.theme.*
+import com.example.estudent.util.getDisplayDate
 import com.example.estudent.util.getRowColor
 
-@Preview
 @Composable
 fun DutyRowShrank(
     modifier: Modifier = Modifier,
-    duty: Duty = Duty(),
+    duty: Duty,
 ) {
     val rowColor = getRowColor(deadline = duty.deadline)
 
@@ -59,7 +59,7 @@ fun DutyRowShrank(
 
             Text(
                 modifier = Modifier.align(Start),
-                text = duty.deadline,
+                text = getDisplayDate(duty.deadline),
                 color = mTextWhite,
                 fontWeight = FontWeight.Normal,
                 fontStyle = Italic,

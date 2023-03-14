@@ -14,6 +14,9 @@ interface EStudentDao {
     @Delete
     suspend fun deleteDuty(duty: Duty)
 
+    @Update
+    suspend fun updateDuty(duty :Duty)
+
     @Query("SELECT * FROM duty_table")
     fun getAllDuties(): Flow<List<Duty>>
     

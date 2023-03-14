@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.estudent.R
+import com.example.estudent.presentation.screen.common_components.ProfileIcon
 
 @Composable
 fun HomeHeader(
@@ -29,18 +30,10 @@ fun HomeHeader(
     ) {
         GreetingText()
 
-        Icon(
-            modifier = Modifier
-                .clip(CircleShape)
-                .size(64.dp)
-                .clickable {
-                    onProfileClicked()
-                },
-            imageVector = Icons.Default.AccountCircle, contentDescription = "Profile icon",
-            tint = MaterialTheme.colors.onBackground
-        )
+        ProfileIcon(onProfileClicked)
     }
 }
+
 
 @Composable
 fun GreetingText() {

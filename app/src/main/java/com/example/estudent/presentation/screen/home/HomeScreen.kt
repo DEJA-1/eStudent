@@ -21,6 +21,7 @@ import com.example.estudent.presentation.screen.common_components.DutyRowExpande
 import com.example.estudent.presentation.screen.home.components.DutiesColumn
 import com.example.estudent.presentation.screen.home.components.HomeHeader
 import com.example.estudent.presentation.screen.home.components.ImportantAndUpcomingSection
+import com.example.estudent.presentation.screen.home.components.RecentSection
 import com.example.estudent.ui.theme.HomeScreenColorPaletteLight
 
 @Composable
@@ -36,7 +37,7 @@ fun HomeScreen(
         description = "Wykonac zadanie 2 z listy laboratorium 2",
         category = "Project",
         importance = "Important",
-        deadline = "25.03.23"
+        deadline = "25.03.2023"
     )
 
     val duty1 = Duty(
@@ -44,7 +45,8 @@ fun HomeScreen(
         description = "Wykonac zadanie 2 z listy laboratorium 2",
         category = "Task",
         importance = "Moderate",
-        deadline = "12.03.23"
+        deadline = "12.03.2023",
+        isCompleted = true
     )
 
     val duty2 = Duty(
@@ -52,14 +54,16 @@ fun HomeScreen(
         description = "Wykonac zadanie 2 z listy laboratorium 2",
         category = "Exam",
         importance = "Minor",
-        deadline = "16.03.23"
+        deadline = "17.03.2023"
     )
 
     MaterialTheme(colors = HomeScreenColorPaletteLight) {
 
         Box(
-            modifier = Modifier.fillMaxWidth()
-                .fillMaxHeight(0.92f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(bottom = 50.dp),
             contentAlignment = Center
         ) {
 
@@ -78,7 +82,7 @@ fun HomeScreen(
             ) {
 
                 HomeHeader(modifier = modifier.fillMaxWidth(), onProfileClicked = {
-                    // TODO
+                    // TODO OnProfileClicked
                 })
 
                 Spacer(modifier = Modifier.height(40.dp))
@@ -93,35 +97,13 @@ fun HomeScreen(
                     thickness = 2.dp
                 )
 
-//            RecentSection()
-
-                Column(
-                    modifier = Modifier.padding(8.dp),
-                ) {
-
-                    Text(
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        text = "Recent",
-                        fontWeight = FontWeight.Bold,
-                        fontStyle = FontStyle.Italic,
-                        fontSize = 32.sp,
-                        color = MaterialTheme.colors.onBackground,
-                        textAlign = TextAlign.Start
-                    )
-
-                    DutiesColumn(
-                        duties = listOf(duty, duty1, duty2, duty2),
-                        modifier = Modifier.fillMaxWidth(),
-                        content = { duty ->
-                             DutyRowExpanded(duty = duty)
-                        }
-                    )
-                }
+                RecentSection(duty, duty1, duty2,
+                    onCheckClicked = { duty ->
+                        viewModel.updateDutyIsCompleted(duty)
+                    })
 
             }
         }
     }
 }
-
-
 
