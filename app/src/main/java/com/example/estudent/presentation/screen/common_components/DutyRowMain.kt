@@ -29,6 +29,8 @@ import com.example.estudent.util.getRowColor
 fun DutyRowMain(
     modifier: Modifier = Modifier,
     duty: Duty,
+    fontSizeTitleSp: Int = 16,
+    fontSizeDescriptionSp: Int = 12,
     onCheckClicked: (Duty) -> Unit
 ) {
     val rowColor = getRowColor(deadline = duty.deadline)
@@ -51,6 +53,7 @@ fun DutyRowMain(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth(0.9f),
@@ -61,8 +64,7 @@ fun DutyRowMain(
                     text = duty.title,
                     color = mTextWhite,
                     fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic,
-                    fontSize = 16.sp,
+                    fontSize = fontSizeTitleSp.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -72,8 +74,7 @@ fun DutyRowMain(
                     text = getDisplayDate(duty.deadline),
                     color = mTextWhite,
                     fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Italic,
-                    fontSize = 10.sp,
+                    fontSize = fontSizeDescriptionSp.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

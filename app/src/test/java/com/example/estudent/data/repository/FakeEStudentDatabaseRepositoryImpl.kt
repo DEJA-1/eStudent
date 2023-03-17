@@ -1,13 +1,13 @@
 package com.example.estudent.data.repository
 
-import com.example.estudent.common.Resource
 import com.example.estudent.domain.model.Duty
 import com.example.estudent.domain.repository.EStudentDatabaseRepository
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-class FakeEStudentDatabaseRepositoryImpl : EStudentDatabaseRepository {
+class FakeEStudentDatabaseRepositoryImpl() : EStudentDatabaseRepository {
     private val duties = mutableListOf<Duty>()
-    private val shouldReturnError = false
+    var shouldReturnError: Boolean = false
 
     override suspend fun insertDuty(duty: Duty) {
         duties.add(duty)
@@ -24,23 +24,17 @@ class FakeEStudentDatabaseRepositoryImpl : EStudentDatabaseRepository {
         }
     }
 
-    override fun getAllDuties(): Flow<Resource<List<Duty>>> = flow {
-        emit(Resource.Loading())
-        if (shouldReturnError)
-            emit(Resource.Error("Failed to retrieve all duties from the database"))
-        else
-            emit(Resource.Success(duties))
-
+    override fun getAllDuties(): Flow<List<Duty>> = flow {
+        if (shouldReturnError) {
+            throw Exception("Failed to retrieve duties from database")
+        } else {
+            emit(duties.toList())
+        }
     }
 
-    override fun getDutiesByCategory(category: String): Flow<Resource<List<Duty>>> = flow {
+    override fun getDutiesByCategory(category: String): Flow<List<Duty>> = flow {
         val dutiesByCategory = duties.filter { it.category == category }
-
-        emit(Resource.Loading())
-        if (shouldReturnError)
-            emit(Resource.Error("Failed to retrieve all duties from the database"))
-        else
-            emit(Resource.Success(dutiesByCategory))
+        emit(dutiesByCategory)
     }
 
 }

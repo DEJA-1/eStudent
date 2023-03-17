@@ -4,7 +4,6 @@ import com.example.estudent.data.repository.FakeEStudentDatabaseRepositoryImpl
 import com.example.estudent.domain.model.Duty
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -42,7 +41,7 @@ class GetAllDutiesUseCaseTest {
     fun `Get all duties use case`() = runTest {
         var duties: List<Duty> = emptyList()
         getAllDutiesUseCase().collect {
-            duties = it.data ?: emptyList()
+            duties = it
         }
         assertThat(duties).isNotEmpty()
     }

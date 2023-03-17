@@ -92,6 +92,8 @@ dependencies {
 
     androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
 
+    testImplementation 'app.cash.turbine:turbine:0.11.0'
+
     // Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
 

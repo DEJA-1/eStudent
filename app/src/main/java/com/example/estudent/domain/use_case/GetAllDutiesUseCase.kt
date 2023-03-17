@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetAllDutiesUseCase @Inject constructor(
     private val repository: EStudentDatabaseRepository
 ){
-    operator fun invoke() : Flow<Resource<List<Duty>>> =
+    operator fun invoke() =
         repository.getAllDuties()
 
 }

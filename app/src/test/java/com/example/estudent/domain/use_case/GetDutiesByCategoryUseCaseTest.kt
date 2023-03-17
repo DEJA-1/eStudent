@@ -42,7 +42,7 @@ class GetDutiesByCategoryUseCaseTest {
         var duties = emptyList<Duty>()
 
         getDutiesByCategoryUseCase(category).collect {
-             duties = it.data ?: emptyList()
+             duties = it
         }
 
         duties.forEach { duty ->

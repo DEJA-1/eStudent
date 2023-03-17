@@ -51,7 +51,6 @@ fun DutyRowShrank(
                 text = duty.title,
                 color = mTextWhite,
                 fontWeight = FontWeight.Bold,
-                fontStyle = Italic,
                 fontSize = 16.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -62,7 +61,6 @@ fun DutyRowShrank(
                 text = getDisplayDate(duty.deadline),
                 color = mTextWhite,
                 fontWeight = FontWeight.Normal,
-                fontStyle = Italic,
                 fontSize = 10.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

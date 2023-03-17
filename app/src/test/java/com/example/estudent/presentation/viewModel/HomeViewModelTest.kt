@@ -1,18 +1,18 @@
 
-package com.example.estudent.presentation.home
+package com.example.estudent.presentation.viewModel
 
+import app.cash.turbine.test
 import com.example.estudent.MainCoroutineRule
 import com.example.estudent.data.repository.FakeEStudentDatabaseRepositoryImpl
 import com.example.estudent.domain.model.Duty
 import com.example.estudent.domain.repository.EStudentDatabaseRepository
 import com.example.estudent.domain.use_case.GetAllDutiesUseCase
 import com.example.estudent.domain.use_case.UpdateDutyUseCase
-import com.example.estudent.presentation.screen.home.HomeViewModel
 import com.example.estudent.presentation.state.DutyUiState
 import com.google.common.truth.Truth.assertThat
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceTimeBy
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -25,8 +25,8 @@ class HomeViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var viewModel: HomeViewModel
-    private lateinit var fakeRepository: EStudentDatabaseRepository
     private lateinit var getAllDutiesUseCase: GetAllDutiesUseCase
+    private lateinit var fakeRepository: EStudentDatabaseRepository
     private lateinit var updateDutyUseCase: UpdateDutyUseCase
 
     @Before
@@ -37,10 +37,8 @@ class HomeViewModelTest {
         viewModel = HomeViewModel(getAllDutiesUseCase, updateDutyUseCase)
     }
 
-    //TODO DOESN'T WORK  RIGHT
     @Test
-    fun `HomeViewModel getAllDuties returns Resource Success`() = runTest {
-        val uiState = viewModel.uiState.value
+    fun `HomeViewModel getAllDuties return data`() = runBlocking {
         val categories = listOf("Projects", "Exams", "Tasks")
 
         val duty1 = Duty(id = 1, title = "a", description = "a", importance = "a", deadline = "a", isCompleted = false, category = categories.random())
@@ -54,12 +52,13 @@ class HomeViewModelTest {
 
         viewModel.getAllDuties()
 
-        assertThat(viewModel.uiState.value).isEqualTo(DutyUiState(duties = duties, isLoading = true))
+        viewModel.uiState.test {
+            assertEquals(DutyUiState(duties = duties, isLoading = false), awaitItem())
+        }
     }
 
-
     @Test
-    fun `HomeViewModel update duty is completed state`() = runTest {
+    fun `HomeViewModel updateDutyIsCompleted`() = runTest {
         var duties = listOf<Duty>()
         val duty = Duty(
             id = 1,
@@ -70,7 +69,7 @@ class HomeViewModelTest {
         viewModel.updateDutyIsCompleted(duty)
 
         getAllDutiesUseCase().collect {
-            duties = it.data ?: emptyList()
+            duties = it
         }
 
         assertThat(duties.find { it.id == 1 }?.isCompleted).isEqualTo(true)

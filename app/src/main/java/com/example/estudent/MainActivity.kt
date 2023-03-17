@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +25,7 @@ import com.example.estudent.navigation.BottomNavigationBar
 import com.example.estudent.navigation.MyNavHost
 import com.example.estudent.navigation.Screen
 import com.example.estudent.ui.theme.EStudentTheme
+import com.example.estudent.ui.theme.mGreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -88,7 +91,23 @@ fun MyApp() {
                         }
                     }
                 )
-            }
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { navController.navigate(Screen.Add.route) },
+                    backgroundColor = MaterialTheme.colors.onBackground,
+                    contentColor = MaterialTheme.colors.onBackground,
+                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 4.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "FAB",
+                        tint = MaterialTheme.colors.background
+                    )
+                }
+            },
+            floatingActionButtonPosition = FabPosition.Center,
+            isFloatingActionButtonDocked = true
         ) {
             MyNavHost(navController = navController)
         }

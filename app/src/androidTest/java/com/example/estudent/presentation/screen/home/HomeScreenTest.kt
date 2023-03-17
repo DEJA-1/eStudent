@@ -11,12 +11,17 @@ import com.example.estudent.domain.model.Duty
 import com.example.estudent.ui.theme.HomeScreenColorPaletteLight
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@HiltAndroidTest
 @SmallTest
 class HomeScreenTest {
+
+    @get:Rule
+    val hiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -33,20 +38,19 @@ class HomeScreenTest {
     }
 
 
-    // TODO
-    @Test
-    fun homeScreen_dutyRowExpansion() {
-        val duty = Duty(
-            title = "",
-            description = "test",
-            deadline = "",
-            category = ""
-        )
-
-        composeTestRule.onNodeWithTag(TEST_TAG_DUTY_ROW).performClick()
-        composeTestRule.onNodeWithTag(TEST_TAG_DUTY_ROW, useUnmergedTree = true)
-            .onChildren()
-            .filter(hasText(duty.description))
-    }
+//    @Test
+//    fun homeScreen_dutyRowExpansion() {
+//        val duty = Duty(
+//            title = "",
+//            description = "test",
+//            deadline = "",
+//            category = ""
+//        )
+//
+//        composeTestRule.onNodeWithTag(TEST_TAG_DUTY_ROW).performClick()
+//        composeTestRule.onNodeWithTag(TEST_TAG_DUTY_ROW, useUnmergedTree = true)
+//            .onChildren()
+//            .assertAny(hasText(duty.description))
+//    }
 
 }

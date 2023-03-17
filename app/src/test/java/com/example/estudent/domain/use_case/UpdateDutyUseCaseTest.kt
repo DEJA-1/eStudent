@@ -48,7 +48,7 @@ class UpdateDutyUseCaseTest {
         )
         updateDutyUseCase(dutyToUpdate)
         fakeRepository.getAllDuties().collect {
-            duties = it.data ?: emptyList()
+            duties = it
         }
         assertThat(duties).contains(dutyToUpdate)
     }

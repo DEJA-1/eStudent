@@ -32,14 +32,23 @@ fun BottomNavigationBar(
 
     BottomNavigation(
         modifier = modifier,
-        elevation = 55.dp,
+        elevation = 1.dp,
         backgroundColor = Color.Transparent
     ) {
-        items.forEach { item ->
+        items.forEachIndexed { index, item ->
 
             selected = currentDestination?.hierarchy?.any {
                 currentRoute == item.route
             } == true
+
+            // Empty navigation item to avoid fab button overlapping other items
+            if (index == 2) {
+                BottomNavigationItem(
+                    selected = false,
+                    onClick = { },
+                    icon = {},
+                )
+            }
 
             BottomNavigationItem(
                 onClick = { onItemClick(item) },
