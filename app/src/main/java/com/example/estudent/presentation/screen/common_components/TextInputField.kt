@@ -19,26 +19,21 @@ import com.example.estudent.ui.theme.mBackgroundBlackSecondary
 @Composable
 fun TextInputField(
     modifier: Modifier = Modifier,
-    textState: MutableState<String>,
-    characterCounter: MutableState<Int>,
+    text: String,
     label: String,
     maxLines: Int,
     maxLength: Int,
     imeAction: ImeAction = ImeAction.Done,
     keyboardType: KeyboardType = KeyboardType.Text,
     onAction: KeyboardActions = KeyboardActions.Default,
+    onValueChange: (String) -> Unit,
     leadingIcon: @Composable () -> Unit,
 ) {
 
     OutlinedTextField(
         modifier = modifier,
-        value = textState.value,
-        onValueChange = {
-            if (it.length <= maxLength) {
-                textState.value = it
-                characterCounter.value = it.length
-            }
-        },
+        value = text,
+        onValueChange = { text -> onValueChange(text) },
         label = { Text(text = label) },
         leadingIcon = leadingIcon,
         maxLines = maxLines,

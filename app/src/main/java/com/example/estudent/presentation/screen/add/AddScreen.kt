@@ -11,10 +11,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Place
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -29,33 +26,51 @@ import com.example.estudent.R
 import com.example.estudent.common.TEST_TAG_ADD_SCREEN
 import com.example.estudent.presentation.screen.common_components.BackgroundIcon
 import com.example.estudent.presentation.screen.common_components.TextInputField
+import com.example.estudent.presentation.viewModel.AddViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun AddScreen() {
+fun AddScreen(
+    viewModel: AddViewModel
+) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
+    val inputFieldDutyState by viewModel.inputState.collectAsState()
 
-    val title = remember {
-        mutableStateOf("")
-    }
+//
+//    val title = remember {
+//        mutableStateOf("")
+//    }
+//
+//    val description = remember {
+//        mutableStateOf("")
+//    }
+//
+//    val category = remember {
+//        mutableStateOf("")
+//    }
+//
+//    val deadline = remember {
+//        mutableStateOf("")
+//    }
+//
+//
+//    val characterCounterTitle = remember {
+//        mutableStateOf(0)
+//    }
+//
+//    val characterCounterDescription = remember {
+//        mutableStateOf(0)
+//    }
+//
+//    val characterCounterCategory = remember {
+//        mutableStateOf(0)
+//    }
+//
+//    val characterCounterDeadline = remember {
+//        mutableStateOf(0)
+//    }
 
-    val description = remember {
-        mutableStateOf("")
-    }
-
-    val category = remember {
-        mutableStateOf("")
-    }
-
-    val deadline = remember {
-        mutableStateOf("")
-    }
-
-
-    val characterCounter = remember {
-        mutableStateOf(0)
-    }
     val maxTextLength = 40
 
     Box(
@@ -81,10 +96,10 @@ fun AddScreen() {
 
 
                 InputEntry(
-                    text = title,
+                    text = inputFieldDutyState.title,
                     label = "Enter title",
-                    maxTextLength = maxTextLength,
-                    characterCounter = characterCounter,
+                    maxTextLength = inputFieldDutyState.maxTitleLength,
+                    characterCounter = inputFieldDutyState.characterCounterTitle,
                     maxLines = 5,
                     leadingIcon = {
                         Icon(
@@ -92,16 +107,22 @@ fun AddScreen() {
                             contentDescription = "Edit icon",
                             tint = Color.Gray
                         )
+                    },
+                    onValueChange = { text ->
+                        if (text.length <= inputFieldDutyState.maxTitleLength) {
+                            viewModel.updateInputStateTitle(text)
+                            viewModel.updateInputStateCharacterCounterTitle(text.length)
+                        }
                     }
                 ) {
                     keyboardController?.hide()
                 }
 
                 InputEntry(
-                    text = description,
+                    text = inputFieldDutyState.description,
                     label = "Enter description",
-                    maxTextLength = 70,
-                    characterCounter = characterCounter,
+                    maxTextLength = inputFieldDutyState.maxDescriptionLength,
+                    characterCounter = inputFieldDutyState.characterCounterDescription,
                     maxLines = 5,
                     leadingIcon = {
                         Icon(
@@ -109,16 +130,23 @@ fun AddScreen() {
                             contentDescription = "Edit icon",
                             tint = Color.Gray
                         )
+                    },
+                    onValueChange = { text ->
+                        if (text.length <= inputFieldDutyState.maxDescriptionLength) {
+                            viewModel.updateInputStateDescription(text)
+                            viewModel.updateInputStateCharacterCounterDescription(text.length)
+
+                        }
                     }
                 ) {
                     keyboardController?.hide()
                 }
 
                 InputEntry(
-                    text = category,
+                    text = inputFieldDutyState.category,
                     label = "Enter category",
-                    maxTextLength = 10,
-                    characterCounter = characterCounter,
+                    maxTextLength = inputFieldDutyState.maxCategoryLength,
+                    characterCounter = inputFieldDutyState.characterCounterCategory,
                     maxLines = 5,
                     leadingIcon = {
                         Icon(
@@ -126,16 +154,22 @@ fun AddScreen() {
                             contentDescription = "Edit icon",
                             tint = Color.Gray
                         )
+                    },
+                    onValueChange = { text ->
+                        if (text.length <= inputFieldDutyState.maxCategoryLength) {
+                            viewModel.updateInputStateCategory(text)
+                            viewModel.updateInputStateCharacterCounterCategory(text.length)
+                        }
                     }
                 ) {
                     keyboardController?.hide()
                 }
-
+//
                 InputEntry(
-                    text = deadline,
+                    text = inputFieldDutyState.deadline,
                     label = "Enter deadline",
-                    maxTextLength = 20,
-                    characterCounter = characterCounter,
+                    maxTextLength = inputFieldDutyState.maxDeadlineLength,
+                    characterCounter = inputFieldDutyState.characterCounterDeadline,
                     maxLines = 5,
                     leadingIcon = {
                         Icon(
@@ -143,6 +177,12 @@ fun AddScreen() {
                             contentDescription = "Edit icon",
                             tint = Color.Gray
                         )
+                    },
+                    onValueChange = { text ->
+                        if (text.length <= inputFieldDutyState.maxDeadlineLength) {
+                            viewModel.updateInputStateDeadline(text)
+                            viewModel.updateInputStateCharacterCounterDeadline(text.length)
+                        }
                     }
                 ) {
                     keyboardController?.hide()
@@ -155,12 +195,13 @@ fun AddScreen() {
 @Composable
 private fun InputEntry(
     modifier: Modifier = Modifier,
-    text: MutableState<String>,
+    text: String,
     label: String,
     maxTextLength: Int,
     maxLines: Int,
-    characterCounter: MutableState<Int>,
+    characterCounter: Int,
     leadingIcon: @Composable () -> Unit,
+    onValueChange: (String) -> Unit,
     hideKeyboardController: () -> Unit,
 ) {
     Column(
@@ -168,15 +209,15 @@ private fun InputEntry(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextInputField(
-            textState = text,
+            text = text,
             label = label,
             maxLines = maxLines,
             maxLength = maxTextLength,
-            characterCounter = characterCounter,
             imeAction = ImeAction.Done,
             onAction = KeyboardActions {
                 hideKeyboardController()
             },
+            onValueChange = { text -> onValueChange(text) },
             leadingIcon = leadingIcon
         )
         Box(
@@ -184,7 +225,7 @@ private fun InputEntry(
             contentAlignment = Alignment.BottomEnd
         ) {
             Text(
-                text = "${characterCounter.value}/$maxTextLength",
+                text = "${characterCounter}/$maxTextLength",
                 color = Color.Gray,
                 fontSize = 10.sp,
                 textAlign = TextAlign.End
