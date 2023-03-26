@@ -112,5 +112,7 @@ dependencies {
     // SystemUiController
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
 
+    // Date Picker Dialog
+    implementation "io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc"
 
 }

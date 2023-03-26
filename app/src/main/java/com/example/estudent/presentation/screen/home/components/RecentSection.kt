@@ -17,9 +17,7 @@ import com.example.estudent.presentation.screen.common_components.DutyRowExpande
 
 @Composable
 fun RecentSection(
-    duty: Duty,
-    duty1: Duty,
-    duty2: Duty,
+    duties: List<Duty>,
     onCheckClicked: (Duty) -> Unit,
 ) {
     Column(
@@ -36,7 +34,7 @@ fun RecentSection(
         )
 
         DutiesColumn(
-            duties = listOf(duty, duty1, duty2, duty1),
+            duties = duties,
             modifier = Modifier.fillMaxWidth(),
             content = { duty ->
                 DutyRowExpanded(duty = duty, onCheckClicked = { duty ->

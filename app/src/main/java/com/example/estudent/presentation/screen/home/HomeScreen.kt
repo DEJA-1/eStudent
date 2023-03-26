@@ -27,31 +27,6 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsState()
 
-    val duty = Duty(
-        title = "Object oriented programming assignment",
-        description = "Wykonac zadanie 2 z listy laboratorium 2",
-        category = "Project",
-        importance = "Important",
-        deadline = "25.03.2023"
-    )
-
-    val duty1 = Duty(
-        title = "Object oriented programming assignment",
-        description = "Wykonac zadanie 2 z listy laboratorium 2",
-        category = "Task",
-        importance = "Moderate",
-        deadline = "12.03.2023",
-        isCompleted = true
-    )
-
-    val duty2 = Duty(
-        title = "Object oriented programming assignment",
-        description = "Wykonac zadanie 2 z listy laboratorium 2",
-        category = "Exam",
-        importance = "Minor",
-        deadline = "18.03.2023"
-    )
-
     MaterialTheme(colors = HomeScreenColorPaletteLight) {
 
         Box(
@@ -80,21 +55,27 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                ImportantAndUpcomingSection(duty, duty1, duty2)
+                if (uiState.duties.isEmpty()) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "No Duties!")
+                    }
+                } else {
+                    ImportantAndUpcomingSection(duties = uiState.duties)
 
-                Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
 
-                Divider(
-                    modifier = Modifier.padding(8.dp),
-                    color = MaterialTheme.colors.onBackground,
-                    thickness = 2.dp
-                )
+                    Divider(
+                        modifier = Modifier.padding(8.dp),
+                        color = MaterialTheme.colors.onBackground,
+                        thickness = 2.dp
+                    )
 
-                RecentSection(duty, duty1, duty2,
-                    onCheckClicked = { duty ->
-                        viewModel.updateDutyIsCompleted(duty)
-                    })
-
+                    RecentSection(
+                        duties = uiState.duties,
+                        onCheckClicked = { duty ->
+                            viewModel.updateDutyIsCompleted(duty)
+                        })
+                }
             }
         }
     }

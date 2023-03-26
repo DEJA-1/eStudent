@@ -2,7 +2,6 @@ package com.example.estudent.presentation.screen.home
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.input.key.Key.Companion.H
-import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.test.filters.SmallTest

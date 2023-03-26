@@ -1,5 +1,6 @@
 package com.example.estudent.presentation.viewModel
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -60,15 +61,19 @@ class DutyViewModel @Inject constructor(
     }
 
     fun getDutiesByCategory(category: String) = viewModelScope.launch {
+
         _uiState.update {
-            it.copy(isLoading = false)
+            it.copy(isLoading = true)
         }
+
         getDutiesByCategoryUseCase(category = category)
             .flowOn(Dispatchers.IO)
-            .catch { e ->
+            .catch { cause ->
+                Log.d("Database", "${cause.message}")
+
                 _uiState.update {
                     it.copy(
-                        error = "Failed to retrieve dutes from database: ${e.message}",
+                        error = "Failed to retrieve dutes from database",
                         isLoading = false
                     )
                 }

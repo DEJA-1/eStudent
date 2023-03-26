@@ -4,7 +4,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.data.repository.FakeEStudentDatabaseRepositoryImpl
+import com.example.estudent.data.repository.FakeEStudentDatabaseRepositoryImpl
 import com.example.estudent.common.TEST_TAG_CATEGORY_INPUT
 import com.example.estudent.common.TEST_TAG_DEADLINE_INPUT
 import com.example.estudent.common.TEST_TAG_DESCRIPTION_INPUT

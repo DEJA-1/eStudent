@@ -23,15 +23,15 @@ class InputTextFieldViewModel : ViewModel() {
         }
     }
 
-    fun updateTextFieldStateCategory(category: String, characterCounter: Int) {
+    fun updateTextFieldStateCategory(category: String) {
         _textFieldState.update {
-            it.copy(category = category, characterCounterCategory = characterCounter)
+            it.copy(category = category)
         }
     }
 
-    fun updateTextFieldStateDeadline(deadline: String, characterCounter: Int) {
+    fun updateTextFieldStateDeadline(deadline: String) {
         _textFieldState.update {
-            it.copy(deadline = deadline, characterCounterDeadline = characterCounter)
+            it.copy(deadline = deadline)
         }
     }
 

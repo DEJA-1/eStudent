@@ -1,4 +1,4 @@
-package com.example.data.repository
+package com.example.estudent.data.repository
 
 import com.example.estudent.domain.model.Duty
 import com.example.estudent.domain.repository.EStudentDatabaseRepository

@@ -1,11 +1,11 @@
 package com.example.estudent.data.repository
 
+import android.util.Log
 import com.example.estudent.data.local.database.EStudentDao
 import com.example.estudent.domain.model.Duty
 import com.example.estudent.domain.repository.EStudentDatabaseRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class EStudentDatabaseRepositoryImpl @Inject constructor(
@@ -24,13 +24,16 @@ class EStudentDatabaseRepositoryImpl @Inject constructor(
         dao.updateDuty(duty)
     }
 
-    override fun getAllDuties(): Flow<List<Duty>> = flow {
-        val duties = dao.getAllDuties().first()
-        emit(duties)
+    override suspend fun getAllDuties(): Flow<List<Duty>> = flow {
+        dao.getAllDuties().flowOn(Dispatchers.IO)
+            .collect { duties ->
+                Log.d("Duties", "Pobrano ${duties.size} obowiązków z bazy danych")
+                emit(duties)
+            }
     }
 
-    override fun getDutiesByCategory(category: String): Flow<List<Duty>> = flow {
-        val duties = dao.getDutiesByCategory(category = category).first()
-        emit(duties)
+    override suspend fun getDutiesByCategory(category: String): Flow<List<Duty>> = flow {
+        dao.getDutiesByCategory(category = category).flowOn(Dispatchers.IO).conflate()
     }
+
 }

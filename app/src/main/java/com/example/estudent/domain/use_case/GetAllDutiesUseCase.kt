@@ -9,7 +9,5 @@ import javax.inject.Inject
 class GetAllDutiesUseCase @Inject constructor(
     private val repository: EStudentDatabaseRepository
 ){
-    operator fun invoke() =
-        repository.getAllDuties()
-
+    suspend operator fun invoke() = repository.getAllDuties()
 }
