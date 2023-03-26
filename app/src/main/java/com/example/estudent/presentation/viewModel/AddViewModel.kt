@@ -1,61 +1,49 @@
 package com.example.estudent.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.example.estudent.presentation.state.InputFieldDutyState
+import androidx.lifecycle.viewModelScope
+import com.example.estudent.domain.model.Duty
+import com.example.estudent.domain.repository.EStudentDatabaseRepository
+import com.example.estudent.presentation.state.TextFieldState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddViewModel : ViewModel() {
+@HiltViewModel
+class AddViewModel @Inject constructor(
+    val repository: EStudentDatabaseRepository
+) : ViewModel() {
 
-    private val _inputState = MutableStateFlow(InputFieldDutyState())
-    val inputState = _inputState.asStateFlow()
+    private val _dutyToInsert = MutableStateFlow(Duty())
+    val dutyToInsert = _dutyToInsert.asStateFlow()
 
-    fun updateInputStateTitle(title: String) {
-        _inputState.update {
+    fun insertDuty(duty: Duty) = viewModelScope.launch(Dispatchers.IO) {
+        repository.insertDuty(duty)
+    }
+
+    fun updateDutyToInsertTitle(title: String) {
+        _dutyToInsert.update {
             it.copy(title = title)
         }
     }
-
-    fun updateInputStateCharacterCounterTitle(characterCounter: Int) {
-        _inputState.update {
-            it.copy(characterCounterTitle = characterCounter)
-        }
-    }
-
-    fun updateInputStateDescription(description: String) {
-        _inputState.update {
+    fun updateDutyToInsertDescription(description: String) {
+        _dutyToInsert.update {
             it.copy(description = description)
         }
     }
-
-    fun updateInputStateCharacterCounterDescription(characterCounter: Int) {
-        _inputState.update {
-            it.copy(characterCounterDescription = characterCounter)
-        }
-    }
-
-    fun updateInputStateCategory(category: String) {
-        _inputState.update {
+    fun updateDutyToInsertCategory(category: String) {
+        _dutyToInsert.update {
             it.copy(category = category)
         }
     }
-
-    fun updateInputStateCharacterCounterCategory(characterCounter: Int) {
-        _inputState.update {
-            it.copy(characterCounterCategory = characterCounter)
-        }
-    }
-
-    fun updateInputStateDeadline(deadline: String) {
-        _inputState.update {
+    fun updateDutyToInsertDeadline(deadline: String) {
+        _dutyToInsert.update {
             it.copy(deadline = deadline)
         }
     }
 
-    fun updateInputStateCharacterCounterDeadline(characterCounter: Int) {
-        _inputState.update {
-            it.copy(characterCounterDeadline = characterCounter)
-        }
-    }
 }

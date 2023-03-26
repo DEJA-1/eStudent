@@ -14,6 +14,7 @@ import com.example.estudent.presentation.screen.projects.ProjectsScreen
 import com.example.estudent.presentation.viewModel.DutyViewModel
 import com.example.estudent.presentation.screen.tasks.TasksScreen
 import com.example.estudent.presentation.viewModel.AddViewModel
+import com.example.estudent.presentation.viewModel.InputTextFieldViewModel
 
 @Composable
 fun MyNavHost(
@@ -57,9 +58,11 @@ fun MyNavHost(
         composable(
             route = Screen.Add.route
         ) {
-            val viewModel = viewModel<AddViewModel>()
+            val addViewModel = hiltViewModel<AddViewModel>()
+            val inputTextFieldViewModel = viewModel<InputTextFieldViewModel>()
             AddScreen(
-                viewModel = viewModel
+                addViewModel = addViewModel,
+                inputTextFieldViewModel = inputTextFieldViewModel
             )
         }
     }
