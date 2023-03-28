@@ -1,10 +1,11 @@
 package com.example.estudent.presentation.screen.common_components
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.core.EaseOutQuart
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -16,10 +17,9 @@ import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.estudent.domain.model.Duty
@@ -27,7 +27,7 @@ import com.example.estudent.ui.theme.mGreen
 import com.example.estudent.util.getDisplayDate
 import com.example.estudent.util.getRowColor
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun DutyRowExpanded(
     modifier: Modifier = Modifier,
@@ -39,6 +39,7 @@ fun DutyRowExpanded(
     minHeightDp: Int = 50,
     maxHeightDp: Int = 150,
     onCheckClicked: (Duty) -> Unit,
+    deleteDuty: (Duty) -> Unit
 ) {
 
     val circleColor = getRowColor(duty.deadline)
@@ -59,7 +60,9 @@ fun DutyRowExpanded(
                 )
             )
             .padding(bottom = 4.dp)
-            .clickable {
+            .combinedClickable(
+                onLongClick = { deleteDuty(duty) }
+            ) {
                 expanded = !expanded
             },
         horizontalArrangement = Arrangement.SpaceBetween,

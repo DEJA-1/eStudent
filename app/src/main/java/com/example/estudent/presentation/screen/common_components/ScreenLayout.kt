@@ -19,6 +19,7 @@ fun ScreenLayout(
     backgroundIcon: Int,
     backgroundIconContentDescription: String,
     onCheckClicked: (Duty) -> Unit,
+    deleteDuty: (Duty) -> Unit
 ) {
     BackgroundIcon(
         icon = backgroundIcon,
@@ -60,11 +61,13 @@ fun ScreenLayout(
         DutiesColumn(duties = duties,
             content = { duty ->
                 DutyRowExpanded(
-                    duty = duty, onCheckClicked = { onCheckClicked(duty) },
+                    duty = duty,
+                    onCheckClicked = { onCheckClicked(duty) },
                     minHeightDp = 80,
                     circleSizeDp = 52,
                     fontSizeTitleSp = 20,
-                    fontSizeDeadlineSp = 16
+                    fontSizeDeadlineSp = 16,
+                    deleteDuty = { deleteDuty(duty) }
                 )
             })
     }

@@ -27,7 +27,9 @@ fun MyNavHost(
             route = Screen.Home.route
         ) {
             val viewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen(viewModel = viewModel)
+            HomeScreen(viewModel = viewModel) {
+                navController.navigate(Screen.Add.route)
+            }
         }
 
         composable(

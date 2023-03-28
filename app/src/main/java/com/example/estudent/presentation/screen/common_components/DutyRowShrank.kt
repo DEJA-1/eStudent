@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.text.font.FontStyle.Companion.Italic
 import androidx.compose.ui.text.font.FontWeight
@@ -29,10 +30,6 @@ fun DutyRowShrank(
     duty: Duty,
 ) {
     val rowColor = getRowColor(deadline = duty.deadline)
-
-    var showDetails by remember {
-        mutableStateOf(false)
-    }
 
     Card(
         modifier = modifier

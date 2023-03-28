@@ -9,7 +9,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-fun getRowColor(deadline: String): Color {
+fun getRowColor(deadline: String?): Color {
     val dateFormat = SimpleDateFormat("dd.MM.yyyy")
     val deadlineDate = dateFormat.parse(deadline)
     val todayDate = Date()

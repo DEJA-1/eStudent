@@ -63,8 +63,8 @@ class InputTextFieldViewModel : ViewModel() {
 //        return false
 //    }
 
-     fun isTextValid(text: String, errorMessage: String): Boolean {
-        return if (text.isBlank()) {
+     fun isTitleAndDescriptionValid(title: String, description: String, errorMessage: String): Boolean {
+        return if (title.isBlank() || description.isBlank()) {
             _textFieldState.update {
                 it.copy(errorMessage = errorMessage)
             }
@@ -76,33 +76,5 @@ class InputTextFieldViewModel : ViewModel() {
             true
         }
     }
-
-//    fun isTitleInputValid() : Boolean {
-//        _textFieldState.update {
-//            it.copy(errorMessage = "Invalid title")
-//        }
-//        return _textFieldState.value.title.isNotBlank()
-//    }
-//
-//    fun isDescriptionInputValid() : Boolean {
-//        _textFieldState.update {
-//            it.copy(errorMessage = "Invalid description")
-//        }
-//        return _textFieldState.value.description.isNotBlank()
-//    }
-//
-//    fun isCategoryInputValid() : Boolean {
-//        _textFieldState.update {
-//            it.copy(errorMessage = "Invalid category")
-//        }
-//        return _textFieldState.value.category.isNotBlank()
-//    }
-//
-//    fun isDeadlineInputValid() : Boolean {
-//        _textFieldState.update {
-//            it.copy(errorMessage = "Invalid deadline")
-//        }
-//        return _textFieldState.value.deadline.isNotBlank()
-//    }
 
 }

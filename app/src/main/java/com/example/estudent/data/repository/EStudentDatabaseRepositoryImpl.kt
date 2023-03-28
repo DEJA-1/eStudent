@@ -27,7 +27,7 @@ class EStudentDatabaseRepositoryImpl @Inject constructor(
     override suspend fun getAllDuties(): Flow<List<Duty>> = flow {
         dao.getAllDuties().flowOn(Dispatchers.IO)
             .collect { duties ->
-                Log.d("Duties", "Pobrano ${duties.size} obowiązków z bazy danych")
+                Log.d("Database", "Fetched ${duties.size} duties from the database: $duties")
                 emit(duties)
             }
     }

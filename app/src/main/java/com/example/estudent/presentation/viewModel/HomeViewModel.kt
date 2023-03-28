@@ -27,7 +27,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         getAllDuties()
-        Log.d("HomeViewModel", "ViewModel started")
     }
 
     fun getAllDuties() = viewModelScope.launch{
@@ -35,14 +34,11 @@ class HomeViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
 
-        Log.d("HomeViewModel", "getAllDuties() invoked")
-        Log.d("HomeViewModel", _uiState.value.toString())
-
         repository.getAllDuties().collect { result ->
             _uiState.update {
                 it.copy(duties = result, isLoading = false)
            }
-            Log.d("HomeViewModel", _uiState.value.toString())
+
         }
 
     }
@@ -76,5 +72,9 @@ class HomeViewModel @Inject constructor(
     fun updateDutyIsCompleted(duty: Duty) = viewModelScope.launch {
         val updatedDuty = duty.copy(isCompleted = !duty.isCompleted)
         updateDutyUseCase(updatedDuty)
+    }
+
+    fun deleteDuty(duty: Duty) = viewModelScope.launch {
+        repository.deleteDuty(duty)
     }
 }

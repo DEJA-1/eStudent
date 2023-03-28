@@ -1,18 +1,13 @@
 package com.example.estudent.presentation.screen.add
 
-import android.app.DatePickerDialog
-import android.widget.DatePicker
 import android.widget.Toast
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -21,9 +16,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -96,19 +89,19 @@ fun AddScreen(
 
             SaveButton(
                 modifier = Modifier.padding(vertical = 8.dp),
-                errorMessage = textFieldState.errorMessage,
+                isInputValid = textFieldState.title.isNotBlank() && textFieldState.description.isNotBlank(),
                 onSuccess = {
                     val dutyToInsert = Duty(
                         title = textFieldState.title,
                         description = textFieldState.description,
                         category = textFieldState.category,
-                        deadline = textFieldState.deadline
+                        deadline = textFieldState.deadline,
                     )
                     addViewModel.insertDuty(dutyToInsert)
                     Toast.makeText(context, "Successfully added", Toast.LENGTH_SHORT).show()
                 },
                 onError = {
-                    Toast.makeText(context, "${textFieldState.errorMessage}", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Invalid data", Toast.LENGTH_SHORT)
                         .show()
                 }
             )
@@ -138,10 +131,7 @@ private fun InputSection(
             maxTextLength = textFieldState.maxTitleLength,
             characterCounter = textFieldState.characterCounterTitle,
             maxLines = 5,
-            isError = !inputTextFieldViewModel.isTextValid(
-                text = textFieldState.title,
-                errorMessage = "Invalid title."
-            ),
+            isError = textFieldState.title.isBlank(),
             testTag = TEST_TAG_TITLE_INPUT,
             leadingIcon = {
                 Icon(
@@ -170,10 +160,7 @@ private fun InputSection(
             maxTextLength = textFieldState.maxDescriptionLength,
             characterCounter = textFieldState.characterCounterDescription,
             maxLines = 5,
-            isError = !inputTextFieldViewModel.isTextValid(
-                text = textFieldState.description,
-                errorMessage = "Invalid description."
-            ),
+            isError = textFieldState.description.isBlank(),
             testTag = TEST_TAG_DESCRIPTION_INPUT,
             leadingIcon = {
                 Icon(
@@ -445,7 +432,7 @@ fun DateInput(
 
 @Composable
 private fun SaveButton(
-    errorMessage: String?,
+    isInputValid: Boolean,
     onSuccess: () -> Unit,
     onError: () -> Unit,
     modifier: Modifier = Modifier
@@ -454,7 +441,7 @@ private fun SaveButton(
         modifier = modifier
             .fillMaxWidth(0.8f)
             .clickable {
-                if (errorMessage == null)
+                if (isInputValid)
                     onSuccess()
                 else
                     onError()

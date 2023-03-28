@@ -10,10 +10,10 @@ data class Duty(
     val id: Int = 0,
 
     @ColumnInfo(name = "title")
-    val title: String = "",
+    val title: String,
 
     @ColumnInfo(name = "description")
-    val description: String = "",
+    val description: String,
 
     @ColumnInfo(name = "category")
     val category: String = "", // project/task/exam

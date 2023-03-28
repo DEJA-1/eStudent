@@ -19,6 +19,7 @@ import com.example.estudent.presentation.screen.common_components.DutyRowExpande
 fun RecentSection(
     duties: List<Duty>,
     onCheckClicked: (Duty) -> Unit,
+    deleteDuty: (Duty) -> Unit
 ) {
     Column(
         modifier = Modifier.padding(8.dp),
@@ -39,6 +40,9 @@ fun RecentSection(
             content = { duty ->
                 DutyRowExpanded(duty = duty, onCheckClicked = { duty ->
                     onCheckClicked(duty)
+                },
+                deleteDuty = { dutyToDelete ->
+                    deleteDuty(dutyToDelete)
                 })
             }
         )
