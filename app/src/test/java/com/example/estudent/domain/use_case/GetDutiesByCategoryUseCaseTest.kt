@@ -27,7 +27,7 @@ class GetDutiesByCategoryUseCaseTest {
             dutiesToInsert.add(
                 Duty(
                     id = it,
-                    category = categories.random()
+                    category = categories.random(), title = "title", description = "description"
                 )
             )
         }
@@ -42,7 +42,7 @@ class GetDutiesByCategoryUseCaseTest {
         var duties = emptyList<Duty>()
 
         getDutiesByCategoryUseCase(category).collect {
-             duties = it
+            duties = it
         }
 
         duties.forEach { duty ->

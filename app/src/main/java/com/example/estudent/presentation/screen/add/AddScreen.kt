@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -36,11 +37,13 @@ import androidx.compose.ui.window.DialogProperties
 import com.example.estudent.R
 import com.example.estudent.common.*
 import com.example.estudent.domain.model.Duty
+import com.example.estudent.presentation.screen.add.components.CustomSwitch
 import com.example.estudent.presentation.screen.common_components.BackgroundIcon
 import com.example.estudent.presentation.screen.common_components.TextInputField
 import com.example.estudent.presentation.state.TextFieldState
 import com.example.estudent.presentation.viewModel.AddViewModel
 import com.example.estudent.presentation.viewModel.InputTextFieldViewModel
+import com.example.estudent.ui.theme.mGray
 import com.example.estudent.ui.theme.mGreen
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -98,7 +101,10 @@ fun AddScreen(
                         deadline = textFieldState.deadline,
                     )
                     addViewModel.insertDuty(dutyToInsert)
+
                     Toast.makeText(context, "Successfully added", Toast.LENGTH_SHORT).show()
+
+                    inputTextFieldViewModel.resetTextFieldState()
                 },
                 onError = {
                     Toast.makeText(context, "Invalid data", Toast.LENGTH_SHORT)
@@ -117,6 +123,10 @@ private fun InputSection(
     inputTextFieldViewModel: InputTextFieldViewModel,
     hideKeyboardController: () -> Unit,
 ) {
+
+    val isChecked = rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Column(
         modifier = modifier,
@@ -137,7 +147,7 @@ private fun InputSection(
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit icon",
-                    tint = Color.Gray
+                    tint = mGray.copy(alpha = 0.6f)
                 )
             },
             onClearClick = {
@@ -166,7 +176,7 @@ private fun InputSection(
                 Icon(
                     imageVector = Icons.Default.Place,
                     contentDescription = "Edit icon",
-                    tint = Color.Gray
+                    tint = mGray.copy(alpha = 0.6f)
                 )
             },
             onClearClick = {
@@ -194,42 +204,17 @@ private fun InputSection(
             }
         )
 
-//        InputEntry(
-//            modifier = Modifier.fillMaxWidth(0.8f),
-//            text = textFieldState.deadline,
-//            label = "Enter deadline",
-//            maxTextLength = textFieldState.maxDeadlineLength,
-//            characterCounter = textFieldState.characterCounterDeadline,
-//            maxLines = 5,
-//            isError = false,
-//            testTag = TEST_TAG_DEADLINE_INPUT,
-//            leadingIcon = {
-//                Icon(
-//                    imageVector = Icons.Default.DateRange,
-//                    contentDescription = "Edit icon"
-//                )
-//            },
-//            onClearClick = {
-//                inputTextFieldViewModel.updateTextFieldStateDeadline(
-//                    deadline = "",
-//                    characterCounter = 0
-//                )
-//            },
-//            onValueChange = { text ->
-//                if (text.length <= textFieldState.maxDeadlineLength) {
-//                    inputTextFieldViewModel.updateTextFieldStateDeadline(text, text.length)
-//                }
-//            },
-//            onDoneClick = { deadline ->
-//                hideKeyboardController()
-//            }
-//        )
 
         DateInput(
-            modifier = Modifier.fillMaxWidth(0.8f)
-                .padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(vertical = 8.dp, horizontal = 12.dp),
             onDatePicked = { date ->
                 inputTextFieldViewModel.updateTextFieldStateDeadline(deadline = date)
+            },
+            isChecked = isChecked,
+            onSwitchButtonChange = {
+                // TODO update duty to not use date (no deadline)
+                isChecked.value = !isChecked.value
             }
         )
     }
@@ -328,9 +313,9 @@ private fun CategoryVariant(
 
     val color: Color by animateColorAsState(
         if (isSelected)
-            mGreen
+            mGreen.copy(alpha = 0.7f)
         else
-            Color.DarkGray,
+            mGray.copy(alpha = 0.7f),
         animationSpec = tween(650)
     )
 
@@ -357,7 +342,9 @@ private fun CategoryVariant(
 @Composable
 fun DateInput(
     modifier: Modifier = Modifier,
-    onDatePicked: (String) -> Unit
+    isChecked: MutableState<Boolean>,
+    onSwitchButtonChange: () -> Unit,
+    onDatePicked: (String) -> Unit,
 ) {
 
     var buttonText by remember {
@@ -366,7 +353,7 @@ fun DateInput(
 
     val dateDialogState = rememberMaterialDialogState()
 
-    var pickedDate by remember {
+    var pickedDate by rememberSaveable {
         mutableStateOf(LocalDate.now().plusDays(1))
     }
 
@@ -376,6 +363,14 @@ fun DateInput(
                 .format(pickedDate)
         }
     }
+
+    val pickDateButtonColor: Color by animateColorAsState(
+        if (isChecked.value)
+            mGray.copy(alpha = 0.8f)
+        else
+            mGray.copy(alpha = 0.3f),
+        animationSpec = tween(650)
+    )
 
     MaterialDialog(
         dialogState = dateDialogState,
@@ -408,23 +403,42 @@ fun DateInput(
         )
     }
 
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(mGreen)
-            .clickable {
-                dateDialogState.show()
-            },
-        contentAlignment = Alignment.Center
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
 
-        Text(
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 20.dp),
-            text = buttonText,
-            color = MaterialTheme.colors.onBackground,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CustomSwitch(isChecked = isChecked, onChange = { onSwitchButtonChange() })
+
+            Text(
+                text = "Is there a deadline?",
+                color = MaterialTheme.colors.onBackground,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+        Box(
+            modifier = modifier
+                .clip(RoundedCornerShape(16.dp))
+                .background(pickDateButtonColor)
+                .clickable(enabled = isChecked.value) {
+                    dateDialogState.show()
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp),
+                text = buttonText,
+                color = MaterialTheme.colors.onBackground,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+        }
 
     }
 
@@ -435,11 +449,13 @@ private fun SaveButton(
     isInputValid: Boolean,
     onSuccess: () -> Unit,
     onError: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth(0.8f)
+            .fillMaxHeight(0.14f)
+            .clip(RoundedCornerShape(16.dp))
             .clickable {
                 if (isInputValid)
                     onSuccess()
@@ -450,9 +466,10 @@ private fun SaveButton(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.padding(vertical = 16.dp, horizontal = 48.dp),
+            modifier = Modifier.padding(vertical = 4.dp, horizontal = 24.dp),
             text = "Save",
             color = MaterialTheme.colors.onBackground,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
     }

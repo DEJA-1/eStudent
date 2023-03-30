@@ -46,7 +46,7 @@ class DutyViewModelTest {
         var dutiesFilteredByCategory = emptyList<Duty>()
 
         repeat(10) { iterator ->
-            duties.add(Duty(id = iterator, category = categories.random()))
+            duties.add(Duty(id = iterator, category = categories.random(), title = "title", description = "description"))
         }
 
         duties.forEach { duty ->
@@ -70,7 +70,7 @@ class DutyViewModelTest {
         val duty = Duty(
             id = 1,
             category = category,
-            isCompleted = false
+            isCompleted = false, title = "title", description = "description"
         )
         fakeRepository.insertDuty(duty)
 

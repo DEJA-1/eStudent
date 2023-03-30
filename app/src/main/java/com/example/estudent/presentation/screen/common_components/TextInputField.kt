@@ -17,10 +17,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.example.estudent.ui.theme.mBackgroundBlackSecondary
-import com.example.estudent.ui.theme.mGreen
-import com.example.estudent.ui.theme.mRed
-import com.example.estudent.ui.theme.mYellow
+import com.example.estudent.ui.theme.*
 
 @Composable
 fun TextInputField(
@@ -51,7 +48,7 @@ fun TextInputField(
                 modifier = Modifier.clickable {
                     onClearClick()
                 },
-                tint = mYellow
+                tint = mGray
             )
         },
         maxLines = maxLines,

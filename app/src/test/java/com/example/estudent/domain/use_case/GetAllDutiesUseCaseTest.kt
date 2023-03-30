@@ -28,7 +28,7 @@ class GetAllDutiesUseCaseTest {
             dutiesToInsert.add(
                 Duty(
                     id = it,
-                    category = categories.random()
+                    category = categories.random(), title = "title", description = "description"
                 )
             )
         }

@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
 
-        repository.getAllDuties().collect { result ->
+        getAllDutiesUseCase().collect { result ->
             _uiState.update {
                 it.copy(duties = result, isLoading = false)
            }
@@ -43,31 +43,6 @@ class HomeViewModel @Inject constructor(
 
     }
 
-//    fun getAllDuties() = viewModelScope.launch {
-//        _uiState.update {
-//            it.copy(isLoading = true)
-//        }
-//
-//        Log.d("HomeViewModel", "getAllDuties() invoked")
-//
-//        getAllDutiesUseCase()
-//            .catch { cause ->
-//
-//                Log.d("Database", "${cause.message}")
-//
-//                _uiState.update {
-//                    it.copy(error = "Failed to retrieve duties from database", isLoading = false)
-//                }
-//            }
-//
-//            .collect { result ->
-//                _uiState.update {
-//                    it.copy(duties = result, isLoading = false)
-//                }
-//                Log.d("HomeViewModel", _uiState.value.toString())
-//            }
-//
-//    }
 
     fun updateDutyIsCompleted(duty: Duty) = viewModelScope.launch {
         val updatedDuty = duty.copy(isCompleted = !duty.isCompleted)

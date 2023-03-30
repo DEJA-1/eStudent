@@ -1,4 +1,3 @@
-
 package com.example.estudent.presentation.viewModel
 
 import app.cash.turbine.test
@@ -34,16 +33,34 @@ class HomeViewModelTest {
         fakeRepository = FakeEStudentDatabaseRepositoryImpl()
         getAllDutiesUseCase = GetAllDutiesUseCase(fakeRepository)
         updateDutyUseCase = UpdateDutyUseCase(fakeRepository)
-        viewModel = HomeViewModel(getAllDutiesUseCase, updateDutyUseCase)
+        viewModel = HomeViewModel(getAllDutiesUseCase, updateDutyUseCase, fakeRepository)
     }
 
     @Test
     fun `HomeViewModel getAllDuties return data`() = runBlocking {
         val categories = listOf("Projects", "Exams", "Tasks")
 
-        val duty1 = Duty(id = 1, title = "a", description = "a", importance = "a", deadline = "a", isCompleted = false, category = categories.random())
-        val duty2 = Duty(id = 2, category = categories.random())
-        val duty3 = Duty(id = 3 , category = categories.random())
+        val duty1 = Duty(
+            id = 1,
+            title = "a",
+            description = "a",
+            importance = "a",
+            deadline = "a",
+            isCompleted = false,
+            category = categories.random()
+        )
+        val duty2 = Duty(
+            id = 2,
+            category = categories.random(),
+            title = "title",
+            description = "description"
+        )
+        val duty3 = Duty(
+            id = 3,
+            category = categories.random(),
+            title = "title",
+            description = "description"
+        )
         val duties = listOf(duty1, duty2, duty3)
 
         duties.forEach { duty ->
@@ -62,7 +79,7 @@ class HomeViewModelTest {
         var duties = listOf<Duty>()
         val duty = Duty(
             id = 1,
-            isCompleted = false
+            isCompleted = false, title = "title", description = "description"
         )
         fakeRepository.insertDuty(duty)
 

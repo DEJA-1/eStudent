@@ -35,45 +35,11 @@ class InputTextFieldViewModel : ViewModel() {
         }
     }
 
-//    fun isInputValid(parameter: String) : Boolean {
-//        when (parameter) {
-//            "title" -> {
-//                return b()
-//            }
-//            "description" -> {
-//                _textFieldState.update {
-//                    it.copy(errorMessage = "Invalid description")
-//                }
-//                return _textFieldState.value.description.isNotBlank()
-//            }
-//            "category" -> {
-//                _textFieldState.update {
-//                    it.copy(errorMessage = "Invalid category")
-//                }
-//                return _textFieldState.value.category.isNotBlank()
-//            }
-//            "deadline" -> {
-//                _textFieldState.update {
-//                    it.copy(errorMessage = "Invalid deadline")
-//                }
-//                return _textFieldState.value.deadline.isNotBlank()
-//            }
-//            else -> {}
-//        }
-//        return false
-//    }
-
-     fun isTitleAndDescriptionValid(title: String, description: String, errorMessage: String): Boolean {
-        return if (title.isBlank() || description.isBlank()) {
-            _textFieldState.update {
-                it.copy(errorMessage = errorMessage)
-            }
-            false
-        } else {
-            _textFieldState.update {
-                it.copy(errorMessage = null)
-            }
-            true
+    fun resetTextFieldState() {
+        _textFieldState.update {
+            it.copy(title = "",
+            description = "",
+            category = "Projects")
         }
     }
 

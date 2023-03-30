@@ -28,7 +28,7 @@ class UpdateDutyUseCaseTest {
             dutiesToInsert.add(
                 Duty(
                     id = it,
-                    category = categories.random()
+                    category = categories.random(), title = "title", description = "description"
                 )
             )
         }
@@ -44,7 +44,8 @@ class UpdateDutyUseCaseTest {
             id = 1,
             category = "Projects",
             isCompleted = true,
-            title = "test"
+            title = "test",
+            description = "description"
         )
         updateDutyUseCase(dutyToUpdate)
         fakeRepository.getAllDuties().collect {

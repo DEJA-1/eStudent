@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Top
@@ -43,7 +44,7 @@ fun DutyRowExpanded(
 ) {
 
     val circleColor = getRowColor(duty.deadline)
-    var expanded by remember {
+    var expanded by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -123,7 +124,7 @@ fun DutyRowExpanded(
                 ) {
                     Text(
                         modifier = Modifier.padding(top = 2.dp),
-                        text = "Przykladowy opis zadania prykladowy opis zadania przykladowy opis zadania przykladowy opis zadania przykladowy opis zadania",
+                        text = duty.description,
                         fontSize = fontSizeDescriptionSp.sp,
                         color = if (duty.isCompleted)
                             MaterialTheme.colors.onBackground.copy(0.3f)
