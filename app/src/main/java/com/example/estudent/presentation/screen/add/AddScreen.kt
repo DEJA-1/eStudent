@@ -1,5 +1,6 @@
 package com.example.estudent.presentation.screen.add
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -200,11 +201,12 @@ private fun InputSection(
             }
         )
 
-        CategoryAndImportanceInputRow(
+        CategoryInputRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
-            updateCategory = { categoryName ->
+            elements = listOf("Projects", "Tasks", "Exams"),
+            onCategoryVariantClick = { categoryName ->
                 inputTextFieldViewModel.updateTextFieldStateCategory(categoryName)
             }
         )
@@ -218,18 +220,17 @@ private fun InputSection(
             },
             isChecked = isChecked,
             onSwitchButtonChange = {
-                // TODO update duty to not use date (no deadline)
                 isChecked.value = !isChecked.value
                 inputTextFieldViewModel.updateTextFieldStateHasDeadline(hasDeadline = isChecked.value)
             }
         )
 
-        CategoryAndImportanceInputRow(
+        ImportanceInputRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
             elements = listOf("Important", "Moderate", "Unimportant"),
-            updateCategory = { importanceName ->
+            onImportanceVariantClick = { importanceName ->
                 inputTextFieldViewModel.updateTextFieldStateImportance(importanceName)
             }
         )
@@ -285,10 +286,10 @@ private fun InputEntry(
 }
 
 @Composable
-fun CategoryAndImportanceInputRow(
+fun CategoryInputRow(
     modifier: Modifier = Modifier,
-    elements: List<String> = listOf("Projects", "Tasks", "Exams"),
-    updateCategory: (String) -> Unit,
+    elements: List<String>,
+    onCategoryVariantClick: (String) -> Unit,
 ) {
 
     var selectedCategoryVariantIndex by remember {
@@ -305,26 +306,60 @@ fun CategoryAndImportanceInputRow(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             itemsIndexed(elements) { index, category ->
+
                 CategoryAndImportanceVariant(
                     variantName = category,
                     isSelected = selectedCategoryVariantIndex == index,
-                    onCategoryVariantClick = { categoryName ->
-                        updateCategory(categoryName)
+                    onVariantClick = { categoryName ->
+                        onCategoryVariantClick(categoryName)
                         selectedCategoryVariantIndex = index
                     })
             }
 
         }
+    }
+}
 
+@Composable
+fun ImportanceInputRow(
+    modifier: Modifier = Modifier,
+    elements: List<String>,
+    onImportanceVariantClick: (String) -> Unit,
+) {
+
+    var selectedImportanceVariantIndex by remember {
+        mutableStateOf(0)
     }
 
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            itemsIndexed(elements) { index, category ->
+
+                CategoryAndImportanceVariant(
+                    variantName = category,
+                    isSelected = selectedImportanceVariantIndex == index,
+                    onVariantClick = { importanceName ->
+                        onImportanceVariantClick(importanceName)
+                        selectedImportanceVariantIndex = index
+                    })
+            }
+
+        }
+    }
 }
 
 @Composable
 private fun CategoryAndImportanceVariant(
     variantName: String,
     isSelected: Boolean,
-    onCategoryVariantClick: (String) -> Unit,
+    onVariantClick: (String) -> Unit,
 ) {
 
     val color: Color by animateColorAsState(
@@ -349,7 +384,7 @@ private fun CategoryAndImportanceVariant(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
             .clickable {
-                onCategoryVariantClick(variantName)
+                onVariantClick(variantName)
             },
         shape = RoundedCornerShape(16.dp),
         backgroundColor = color,

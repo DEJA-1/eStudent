@@ -95,9 +95,9 @@ private fun HomeScreenContent(
     navigateToAddScreen: () -> Unit
 ) {
 
-    val importantDuties = uiState.duties.filter { it.importance == "Important" }.subList(0, 2)
-    val upcomingDuties = uiState.duties.sortedBy { it.deadline }.subList(0, 2)
-    val recentDuties = uiState.duties.sortedBy { it.addedDate }.subList(0, 4)
+    val importantDuties = uiState.duties.filter { it.importance == "Important" }.take(4)
+    val upcomingDuties = uiState.duties.sortedBy { it.deadline }.take(4)
+    val recentDuties = uiState.duties.sortedBy { it.addedDate }.take(4)
 
     if (uiState.duties.isEmpty()) {
 

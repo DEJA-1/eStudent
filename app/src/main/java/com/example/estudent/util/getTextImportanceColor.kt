@@ -10,7 +10,7 @@ fun getTextImportanceColor(importance: String) : Color {
     return when(importance) {
         "Important" -> mRed
         "Moderate" -> mYellow
-        "Minor" -> mGreen
+        "Unimportant" -> mGreen
         else -> mTextWhite
     }
 }

@@ -15,6 +15,8 @@ data class TextFieldState(
 
     val category: String = "Projects",
 
+    val importance: String = "Important",
+
     val hasDeadline: Boolean = true,
 
     val addedDate: String = DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDate.now()),
@@ -26,7 +28,6 @@ data class TextFieldState(
     val characterCounterDeadline: Int = 0,
     val maxDeadlineLength: Int = 10,
 
-    val importance: String = "Unimportant",
 
     val errorMessage: String? = null
 

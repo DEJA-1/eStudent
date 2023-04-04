@@ -108,7 +108,7 @@ fun DutyRowExpanded(
                 )
 
                 Text(
-                    text = getDisplayDate(duty),
+                    text = "${getDisplayDate(duty)}, ${duty.importance}",
                     fontSize = fontSizeDeadlineSp.sp,
                     color = if (duty.isCompleted)
                         MaterialTheme.colors.onBackground.copy(0.3f)
