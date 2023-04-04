@@ -6,7 +6,6 @@ import com.example.estudent.ui.theme.mRed
 import com.example.estudent.ui.theme.mTextWhite
 import com.example.estudent.ui.theme.mYellow
 
-
 fun getTextImportanceColor(importance: String) : Color {
     return when(importance) {
         "Important" -> mRed

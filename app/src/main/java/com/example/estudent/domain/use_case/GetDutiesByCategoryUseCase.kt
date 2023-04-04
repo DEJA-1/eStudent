@@ -7,6 +7,6 @@ import javax.inject.Inject
 class GetDutiesByCategoryUseCase @Inject constructor(
     private val repository: EStudentDatabaseRepository
 ) {
-    suspend operator fun invoke(category: String) =
+    operator fun invoke(category: String) =
         repository.getDutiesByCategory(category = category)
 }

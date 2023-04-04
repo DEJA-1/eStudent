@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -94,6 +95,10 @@ private fun HomeScreenContent(
     navigateToAddScreen: () -> Unit
 ) {
 
+    val importantDuties = uiState.duties.filter { it.importance == "Important" }.subList(0, 2)
+    val upcomingDuties = uiState.duties.sortedBy { it.deadline }.subList(0, 2)
+    val recentDuties = uiState.duties.sortedBy { it.addedDate }.subList(0, 4)
+
     if (uiState.duties.isEmpty()) {
 
         Column(
@@ -107,13 +112,14 @@ private fun HomeScreenContent(
                 text = "Add your first duty!",
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.h3,
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colors.onBackground,
+                textAlign = TextAlign.Center
             )
 
             Card(
                 modifier = Modifier
+                    .clip(CircleShape)
                     .fillMaxWidth(0.5f)
-                    .clip(RoundedCornerShape(16.dp))
                     .padding(vertical = 4.dp)
                     .clickable {
                                navigateToAddScreen()
@@ -132,7 +138,10 @@ private fun HomeScreenContent(
             }
         }
     } else {
-        ImportantAndUpcomingSection(duties = uiState.duties)
+        ImportantAndUpcomingSection(
+            importantDuties = importantDuties,
+            upcomingDuties = upcomingDuties
+        )
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -143,7 +152,7 @@ private fun HomeScreenContent(
         )
 
         RecentSection(
-            duties = uiState.duties,
+            duties = recentDuties,
             onCheckClicked = { duty ->
                 viewModel.updateDutyIsCompleted(duty)
             },

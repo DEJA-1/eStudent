@@ -43,7 +43,7 @@ fun DutyRowExpanded(
     deleteDuty: (Duty) -> Unit
 ) {
 
-    val circleColor = getRowColor(duty.deadline)
+    val circleColor = getRowColor(duty)
     var expanded by rememberSaveable {
         mutableStateOf(false)
     }
@@ -108,7 +108,7 @@ fun DutyRowExpanded(
                 )
 
                 Text(
-                    text = getDisplayDate(duty.deadline),
+                    text = getDisplayDate(duty),
                     fontSize = fontSizeDeadlineSp.sp,
                     color = if (duty.isCompleted)
                         MaterialTheme.colors.onBackground.copy(0.3f)

@@ -29,9 +29,21 @@ class InputTextFieldViewModel : ViewModel() {
         }
     }
 
+    fun updateTextFieldStateHasDeadline(hasDeadline: Boolean) {
+        _textFieldState.update {
+            it.copy(hasDeadline = hasDeadline)
+        }
+    }
+
     fun updateTextFieldStateDeadline(deadline: String) {
         _textFieldState.update {
             it.copy(deadline = deadline)
+        }
+    }
+
+    fun updateTextFieldStateImportance(importance: String) {
+        _textFieldState.update {
+            it.copy(importance = importance)
         }
     }
 

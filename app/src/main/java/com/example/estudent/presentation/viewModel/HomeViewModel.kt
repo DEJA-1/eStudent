@@ -42,8 +42,6 @@ class HomeViewModel @Inject constructor(
         }
 
     }
-
-
     fun updateDutyIsCompleted(duty: Duty) = viewModelScope.launch {
         val updatedDuty = duty.copy(isCompleted = !duty.isCompleted)
         updateDutyUseCase(updatedDuty)

@@ -1,5 +1,6 @@
 package com.example.estudent.util
 
+import com.example.estudent.domain.model.Duty
 import com.example.estudent.ui.theme.mGreen
 import com.example.estudent.ui.theme.mRed
 import com.example.estudent.ui.theme.mYellow
@@ -15,7 +16,10 @@ class UtilTest {
     fun `Util getRowColor returns green`() {
         val daysAheadFromLocalTime = 10
         val deadline = LocalDate.now().plusDays(daysAheadFromLocalTime.toLong()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-        val rowColor = getRowColor(deadline)
+
+        val duty = Duty(deadline = deadline, title = "", description = "")
+
+        val rowColor = getRowColor(duty)
 
         assertThat(rowColor).isEqualTo(mGreen)
     }
@@ -24,7 +28,10 @@ class UtilTest {
     fun `Util getRowColor returns yellow`() {
         val daysAheadFromLocalTime = 6
         val deadline = LocalDate.now().plusDays(daysAheadFromLocalTime.toLong()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-        val rowColor = getRowColor(deadline)
+
+        val duty = Duty(deadline = deadline, title = "", description = "")
+
+        val rowColor = getRowColor(duty)
 
         assertThat(rowColor).isEqualTo(mYellow)
     }
@@ -33,7 +40,10 @@ class UtilTest {
     fun `Util getRowColor returns red`() {
         val daysAheadFromLocalTime = 2
         val deadline = LocalDate.now().plusDays(daysAheadFromLocalTime.toLong()).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-        val rowColor = getRowColor(deadline)
+
+        val duty = Duty(deadline = deadline, title = "", description = "")
+
+        val rowColor = getRowColor(duty)
 
         assertThat(rowColor).isEqualTo(mRed)
     }
@@ -63,11 +73,25 @@ class UtilTest {
     }
 
     @Test
-    fun `Util getDisplayDate`() {
+    fun `Util getDisplayDate with deadline`() {
         val deadline = "23.03.2023"
-        val displayDate = getDisplayDate(deadline)
+
+        val duty = Duty(deadline = deadline, title = "", description = "", hasDeadline = true)
+
+        val displayDate = getDisplayDate(duty)
 
         assertThat(displayDate).isEqualTo("Thursday, 23.03.2023")
+    }
+
+    @Test
+    fun `Util getDisplayDate without deadline`() {
+        val deadline = "23.03.2023"
+
+        val duty = Duty(deadline = deadline, title = "", description = "", hasDeadline = false)
+
+        val displayDate = getDisplayDate(duty)
+
+        assertThat(displayDate).isEqualTo("")
     }
 
 }

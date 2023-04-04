@@ -2,7 +2,6 @@ package com.example.estudent.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.estudent.data.local.database.EStudentDao
 import com.example.estudent.data.local.database.EStudentDatabase
 import com.example.estudent.data.repository.EStudentDatabaseRepositoryImpl
 import com.example.estudent.domain.repository.EStudentDatabaseRepository
@@ -23,12 +22,13 @@ object AppModule {
             app,
             EStudentDatabase::class.java,
             EStudentDatabase.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideEStudentDatabaseRepository(db: EStudentDatabase) : EStudentDatabaseRepository {
+    fun provideEStudentDatabaseRepository(db: EStudentDatabase): EStudentDatabaseRepository {
         return EStudentDatabaseRepositoryImpl(db.eStudentDao)
     }
 }

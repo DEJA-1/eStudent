@@ -33,7 +33,7 @@ fun DutyRowMain(
     fontSizeDescriptionSp: Int = 12,
     onCheckClicked: (Duty) -> Unit
 ) {
-    val rowColor = getRowColor(deadline = duty.deadline)
+    val rowColor = getRowColor(duty)
 
     var showDetails by remember {
         mutableStateOf(false)
@@ -71,7 +71,7 @@ fun DutyRowMain(
 
                 Text(
                     modifier = Modifier.align(Alignment.Start),
-                    text = getDisplayDate(duty.deadline),
+                    text = getDisplayDate(duty),
                     color = mTextWhite,
                     fontWeight = FontWeight.Normal,
                     fontSize = fontSizeDescriptionSp.sp,

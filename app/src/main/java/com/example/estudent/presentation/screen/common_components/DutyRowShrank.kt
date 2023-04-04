@@ -29,7 +29,7 @@ fun DutyRowShrank(
     modifier: Modifier = Modifier,
     duty: Duty,
 ) {
-    val rowColor = getRowColor(deadline = duty.deadline)
+    val rowColor = getRowColor(duty = duty)
 
     Card(
         modifier = modifier
@@ -55,7 +55,7 @@ fun DutyRowShrank(
 
             Text(
                 modifier = Modifier.align(Start),
-                text = getDisplayDate(duty.deadline),
+                text = getDisplayDate(duty),
                 color = mTextWhite,
                 fontWeight = FontWeight.Normal,
                 fontSize = 10.sp,

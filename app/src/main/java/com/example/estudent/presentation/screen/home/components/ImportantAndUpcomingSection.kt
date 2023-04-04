@@ -11,7 +11,8 @@ import com.example.estudent.presentation.screen.common_components.DutyRowShrank
 
 @Composable
 fun ImportantAndUpcomingSection(
-    duties: List<Duty>
+    importantDuties: List<Duty>,
+    upcomingDuties: List<Duty>
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -19,7 +20,7 @@ fun ImportantAndUpcomingSection(
     ) {
 
         DutiesSection(
-            duties = duties,
+            duties = importantDuties,
             modifier = Modifier.fillMaxWidth(0.46f),
             text = "Important",
             dutiesSection = { duties ->
@@ -38,7 +39,7 @@ fun ImportantAndUpcomingSection(
         )
 
         DutiesSection(
-            duties = duties,
+            duties = upcomingDuties,
             text = "Upcoming",
             dutiesSection = { duties ->
 

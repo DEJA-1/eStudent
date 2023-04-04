@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.estudent.domain.model.Duty
 
-@Database(entities = [Duty::class], version = 1, exportSchema = false)
+@Database(entities = [Duty::class], version = 3, exportSchema = false)
 abstract class EStudentDatabase : RoomDatabase() {
 
     abstract val eStudentDao: EStudentDao

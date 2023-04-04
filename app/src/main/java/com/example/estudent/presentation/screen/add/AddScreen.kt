@@ -45,6 +45,8 @@ import com.example.estudent.presentation.viewModel.AddViewModel
 import com.example.estudent.presentation.viewModel.InputTextFieldViewModel
 import com.example.estudent.ui.theme.mGray
 import com.example.estudent.ui.theme.mGreen
+import com.example.estudent.ui.theme.mRed
+import com.example.estudent.ui.theme.mYellow
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
@@ -98,7 +100,10 @@ fun AddScreen(
                         title = textFieldState.title,
                         description = textFieldState.description,
                         category = textFieldState.category,
+                        hasDeadline = textFieldState.hasDeadline,
                         deadline = textFieldState.deadline,
+                        addedDate = textFieldState.addedDate,
+                        importance = textFieldState.importance
                     )
                     addViewModel.insertDuty(dutyToInsert)
 
@@ -124,8 +129,8 @@ private fun InputSection(
     hideKeyboardController: () -> Unit,
 ) {
 
-    val isChecked = rememberSaveable {
-        mutableStateOf(false)
+    val isChecked = remember {
+        mutableStateOf(textFieldState.hasDeadline)
     }
 
     Column(
@@ -195,7 +200,7 @@ private fun InputSection(
             }
         )
 
-        CategoryInputRow(
+        CategoryAndImportanceInputRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
@@ -215,6 +220,17 @@ private fun InputSection(
             onSwitchButtonChange = {
                 // TODO update duty to not use date (no deadline)
                 isChecked.value = !isChecked.value
+                inputTextFieldViewModel.updateTextFieldStateHasDeadline(hasDeadline = isChecked.value)
+            }
+        )
+
+        CategoryAndImportanceInputRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            elements = listOf("Important", "Moderate", "Unimportant"),
+            updateCategory = { importanceName ->
+                inputTextFieldViewModel.updateTextFieldStateImportance(importanceName)
             }
         )
     }
@@ -269,9 +285,9 @@ private fun InputEntry(
 }
 
 @Composable
-fun CategoryInputRow(
+fun CategoryAndImportanceInputRow(
     modifier: Modifier = Modifier,
-    categories: List<String> = listOf("Projects", "Tasks", "Exams"),
+    elements: List<String> = listOf("Projects", "Tasks", "Exams"),
     updateCategory: (String) -> Unit,
 ) {
 
@@ -288,9 +304,9 @@ fun CategoryInputRow(
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            itemsIndexed(categories) { index, category ->
-                CategoryVariant(
-                    categoryName = category,
+            itemsIndexed(elements) { index, category ->
+                CategoryAndImportanceVariant(
+                    variantName = category,
                     isSelected = selectedCategoryVariantIndex == index,
                     onCategoryVariantClick = { categoryName ->
                         updateCategory(categoryName)
@@ -305,15 +321,25 @@ fun CategoryInputRow(
 }
 
 @Composable
-private fun CategoryVariant(
-    categoryName: String,
+private fun CategoryAndImportanceVariant(
+    variantName: String,
     isSelected: Boolean,
     onCategoryVariantClick: (String) -> Unit,
 ) {
 
     val color: Color by animateColorAsState(
         if (isSelected)
-            mGreen.copy(alpha = 0.7f)
+            when (variantName) {
+                // Categories
+                "Projects" -> mGreen.copy(alpha = 0.7f)
+                "Exams" -> mGreen.copy(alpha = 0.7f)
+                "Tasks" -> mGreen.copy(alpha = 0.7f)
+                // Importance
+                "Unimportant" -> mGreen.copy(alpha = 0.7f)
+                "Important" -> mRed.copy(alpha = 0.7f)
+                "Moderate" -> mYellow.copy(alpha = 0.7f)
+                else -> mGray.copy(alpha = 0.7f)
+            }
         else
             mGray.copy(alpha = 0.7f),
         animationSpec = tween(650)
@@ -323,7 +349,7 @@ private fun CategoryVariant(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
             .clickable {
-                onCategoryVariantClick(categoryName)
+                onCategoryVariantClick(variantName)
             },
         shape = RoundedCornerShape(16.dp),
         backgroundColor = color,
@@ -331,7 +357,7 @@ private fun CategoryVariant(
     ) {
         Text(
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
-            text = categoryName,
+            text = variantName,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onBackground,
             textAlign = TextAlign.Center
@@ -379,7 +405,7 @@ fun DateInput(
         ),
         shape = RoundedCornerShape(16.dp),
         elevation = 4.dp,
-        border = BorderStroke(width = 2.dp, color = Color.Black),
+        border = BorderStroke(width = 2.dp, color = MaterialTheme.colors.onBackground),
         buttons = {
             positiveButton(
                 text = "Ok"
