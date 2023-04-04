@@ -48,7 +48,7 @@ fun TextInputField(
                 modifier = Modifier.clickable {
                     onClearClick()
                 },
-                tint = mGray
+                tint = mGreen
             )
         },
         maxLines = maxLines,
