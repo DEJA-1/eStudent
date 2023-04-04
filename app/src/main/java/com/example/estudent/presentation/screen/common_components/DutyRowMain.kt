@@ -35,20 +35,17 @@ fun DutyRowMain(
 ) {
     val rowColor = getRowColor(duty)
 
-    var showDetails by remember {
-        mutableStateOf(false)
-    }
-
     Card(
         modifier = modifier
             .heightIn(min = 50.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
-        backgroundColor = rowColor,
+        backgroundColor = if (duty.isCompleted) rowColor.copy(alpha = 0.3f) else rowColor,
         elevation = 8.dp
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(vertical = 8.dp, horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically

@@ -82,6 +82,7 @@ fun HomeScreen(
                         navigateToAddScreen()
                     }
                 }
+
             }
         }
     }
@@ -96,13 +97,13 @@ private fun HomeScreenContent(
 ) {
 
     val importantDuties = uiState.duties.filter { it.importance == "Important" }.take(4)
-    val upcomingDuties = uiState.duties.sortedBy { it.deadline }.take(4)
+    val upcomingDuties = uiState.duties.sortedBy { it.deadline }.take(4).dropWhile { !it.hasDeadline }
     val recentDuties = uiState.duties.sortedBy { it.addedDate }.take(4)
 
     if (uiState.duties.isEmpty()) {
-
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = CenterHorizontally
@@ -122,7 +123,7 @@ private fun HomeScreenContent(
                     .fillMaxWidth(0.5f)
                     .padding(vertical = 4.dp)
                     .clickable {
-                               navigateToAddScreen()
+                        navigateToAddScreen()
                     },
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = mYellow,

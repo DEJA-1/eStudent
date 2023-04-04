@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -17,8 +19,7 @@ import com.example.estudent.presentation.viewModel.DutyViewModel
 fun ProjectsScreen(
     viewModel: DutyViewModel,
 ) {
-
-    val duties = viewModel.duties
+    val uiState by viewModel.uiState.collectAsState()
 
     Box(
         modifier = Modifier
@@ -30,7 +31,7 @@ fun ProjectsScreen(
     ) {
 
         ScreenLayout(
-            duties = duties,
+            duties = uiState.duties,
             backgroundIcon = com.example.estudent.R.drawable.projects,
             backgroundIconContentDescription = "Projects Icon",
             onCheckClicked = { duty -> viewModel.updateDutyIsCompleted(duty) },

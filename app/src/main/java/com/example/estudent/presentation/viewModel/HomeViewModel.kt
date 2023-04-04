@@ -38,9 +38,7 @@ class HomeViewModel @Inject constructor(
             _uiState.update {
                 it.copy(duties = result, isLoading = false)
            }
-
         }
-
     }
     fun updateDutyIsCompleted(duty: Duty) = viewModelScope.launch {
         val updatedDuty = duty.copy(isCompleted = !duty.isCompleted)

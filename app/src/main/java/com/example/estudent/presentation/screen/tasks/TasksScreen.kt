@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -19,6 +21,8 @@ fun TasksScreen(
     viewModel: DutyViewModel
 ) {
 
+    val uiState by viewModel.uiState.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -27,7 +31,7 @@ fun TasksScreen(
         contentAlignment = Alignment.Center
     ) {
         ScreenLayout(
-            duties = viewModel.duties,
+            duties = uiState.duties,
             backgroundIcon = R.drawable.tasks,
             backgroundIconContentDescription = "Tasks Icon",
             onCheckClicked = { duty -> viewModel.updateDutyIsCompleted(duty = duty) },

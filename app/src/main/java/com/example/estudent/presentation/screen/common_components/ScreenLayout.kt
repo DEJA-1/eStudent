@@ -6,7 +6,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.estudent.R
 import com.example.estudent.domain.model.Duty
@@ -26,6 +29,34 @@ fun ScreenLayout(
         contentDescription = backgroundIconContentDescription
     )
 
+    if (duties.isEmpty())
+        NoDutiesContent()
+    else
+        ScreenContent(duties, onCheckClicked, deleteDuty)
+
+}
+
+@Composable
+private fun NoDutiesContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "You've completed all duties\nin this category!",
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onBackground,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+private fun ScreenContent(
+    duties: List<Duty>,
+    onCheckClicked: (Duty) -> Unit,
+    deleteDuty: (Duty) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()

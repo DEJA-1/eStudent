@@ -27,62 +27,20 @@ class DutyViewModel @Inject constructor(
 
     val category = savedStateHandle.get<String>(Constants.PARAM_CATEGORY) ?: ""
 
-    // temporary for the purpose of 'testing' before database
-    val duty1 = Duty(
-        title = "Object oriented programming assignment",
-        description = "Wykonac zadanie 2 z listy laboratorium 2",
-        category = "Task",
-        importance = "Moderate",
-        deadline = "12.03.2023",
-        isCompleted = false
-    )
-
-    val duty2 = Duty(
-        title = "Object oriented programming assignment",
-        description = "Wykonac zadanie 2 z listy laboratorium 2",
-        category = "Task",
-        importance = "Moderate",
-        deadline = "22.03.2023",
-        isCompleted = false
-    )
-
-    val duty3 = Duty(
-        title = "Object oriented programming assignment",
-        description = "Wykonac zadanie 2 z listy laboratorium 2",
-        category = "Task",
-        importance = "Moderate",
-        deadline = "18.03.2023",
-        isCompleted = false
-    )
-    val duties = listOf(duty1, duty2, duty1, duty3)
-
     init {
         getDutiesByCategory(category = category)
     }
 
-    fun getDutiesByCategory(category: String) = viewModelScope.launch {
-
+    fun getDutiesByCategory(category: String) = viewModelScope.launch{
         _uiState.update {
             it.copy(isLoading = true)
         }
 
-        getDutiesByCategoryUseCase(category = category)
-            .flowOn(Dispatchers.IO)
-            .catch { cause ->
-                Log.d("Database", "${cause.message}")
-
-                _uiState.update {
-                    it.copy(
-                        error = "Failed to retrieve dutes from database",
-                        isLoading = false
-                    )
-                }
+        getDutiesByCategoryUseCase(category).collect { result ->
+            _uiState.update {
+                it.copy(duties = result, isLoading = false)
             }
-            .collect { result ->
-                _uiState.update {
-                    it.copy(duties = result, isLoading = false)
-                }
-            }
+        }
     }
     fun updateDutyIsCompleted(duty: Duty) = viewModelScope.launch {
         val updatedDuty = duty.copy(isCompleted = !duty.isCompleted)

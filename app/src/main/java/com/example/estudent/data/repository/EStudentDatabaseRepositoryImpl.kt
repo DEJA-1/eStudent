@@ -33,7 +33,11 @@ class EStudentDatabaseRepositoryImpl @Inject constructor(
     }
 
     override fun getDutiesByCategory(category: String): Flow<List<Duty>> = flow {
-        dao.getDutiesByCategory(category = category).flowOn(Dispatchers.IO).conflate()
+        dao.getDutiesByCategory(category).flowOn(Dispatchers.IO)
+            .collect { duties ->
+                Log.d("Database", "Fetched ${duties.size} duties from the database: $duties")
+                emit(duties)
+            }
     }
 
 }

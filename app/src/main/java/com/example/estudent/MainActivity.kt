@@ -84,10 +84,8 @@ fun MyApp() {
                     onItemClick = {
                         if (it.name == "Home") {
                             navController.navigate(it.route)
-                            Log.d("TEST", currentDestination.toString())
                         } else {
                             navController.navigate(it.route + "/${it.name}")
-                            Log.d("TEST", currentDestination.toString())
                         }
                     }
                 )
