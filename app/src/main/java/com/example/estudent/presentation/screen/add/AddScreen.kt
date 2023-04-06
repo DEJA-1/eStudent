@@ -385,7 +385,8 @@ private fun CategoryAndImportanceVariant(
             .clip(RoundedCornerShape(16.dp))
             .clickable {
                 onVariantClick(variantName)
-            },
+            }
+            .testTag(TEST_TAG_CATEGORY_INPUT),
         shape = RoundedCornerShape(16.dp),
         backgroundColor = color,
         elevation = 4.dp

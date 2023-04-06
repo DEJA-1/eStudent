@@ -37,20 +37,4 @@ class HomeScreenTest {
         }
     }
 
-
-//    @Test
-//    fun homeScreen_dutyRowExpansion() {
-//        val duty = Duty(
-//            title = "",
-//            description = "test",
-//            deadline = "",
-//            category = ""
-//        )
-//
-//        composeTestRule.onNodeWithTag(TEST_TAG_DUTY_ROW).performClick()
-//        composeTestRule.onNodeWithTag(TEST_TAG_DUTY_ROW, useUnmergedTree = true)
-//            .onChildren()
-//            .assertAny(hasText(duty.description))
-//    }
-
 }

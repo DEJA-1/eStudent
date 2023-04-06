@@ -3,26 +3,22 @@ package com.example.estudent.presentation.screen.home
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.estudent.data.repository.FakeEStudentDatabaseRepositoryImpl
 import com.example.estudent.common.TEST_TAG_CATEGORY_INPUT
-import com.example.estudent.common.TEST_TAG_DEADLINE_INPUT
 import com.example.estudent.common.TEST_TAG_DESCRIPTION_INPUT
 import com.example.estudent.common.TEST_TAG_TITLE_INPUT
-import com.example.estudent.data.repository.EStudentDatabaseRepositoryImpl
+import com.example.estudent.data.repository.FakeEStudentDatabaseRepositoryImpl
 import com.example.estudent.domain.repository.EStudentDatabaseRepository
 import com.example.estudent.presentation.screen.add.AddScreen
 import com.example.estudent.presentation.viewModel.AddViewModel
 import com.example.estudent.presentation.viewModel.InputTextFieldViewModel
 import com.example.estudent.ui.theme.HomeScreenColorPaletteLight
+import com.example.estudent.ui.theme.mYellow
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
-import javax.inject.Inject
 
 @HiltAndroidTest
 class AddScreenTest {
@@ -48,7 +44,7 @@ class AddScreenTest {
             MaterialTheme(colors = HomeScreenColorPaletteLight) {
                 AddScreen(
                     addViewModel = viewModel,
-                    inputTextFieldViewModel = InputTextFieldViewModel()
+                    inputTextFieldViewModel = inputTextFieldViewModel
                 )
             }
         }
@@ -103,7 +99,6 @@ class AddScreenTest {
     }
 
     //TODO TEST CATEGORY INPUT
-
 
     // TODO TEST DEADLINE INPUT
 
