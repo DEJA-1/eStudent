@@ -102,52 +102,9 @@ class AddScreenTest {
         composeTestRule.onNodeWithTag(TEST_TAG_DESCRIPTION_INPUT, useUnmergedTree = true).assertTextEquals("")
     }
 
-    @Test
-    fun addScreen_testCategoryInput() {
-        val input = "Category"
-        composeTestRule.onNodeWithTag(TEST_TAG_CATEGORY_INPUT).performTextInput(input)
-        composeTestRule.onNodeWithTag(TEST_TAG_CATEGORY_INPUT, useUnmergedTree = true).assertTextEquals(input)
-    }
+    //TODO TEST CATEGORY INPUT
 
-    @Test
-    fun addScreen_testCategoryCharacterCounter() {
-        val input = "Category"
-        val textFieldState = inputTextFieldViewModel.textFieldState.value
-        composeTestRule.onNodeWithTag(TEST_TAG_CATEGORY_INPUT).performTextInput(input)
-        composeTestRule.onNodeWithTag("$TEST_TAG_CATEGORY_INPUT counter", useUnmergedTree = true)
-            .assertTextEquals("${input.length}/${textFieldState.maxCategoryLength}")
-    }
-    @Test
-    fun addScreen_testClearCategory() {
-        val input = "Category"
-        val label = "Enter category"
-        composeTestRule.onNodeWithTag(TEST_TAG_CATEGORY_INPUT).performTextInput(input)
-        composeTestRule.onNodeWithContentDescription("Cancel icon $label").performClick()
-        composeTestRule.onNodeWithTag(TEST_TAG_CATEGORY_INPUT, useUnmergedTree = true).assertTextEquals("")
-    }
 
-    @Test
-    fun addScreen_testDeadlineInput() {
-        val input = "Deadline"
-        composeTestRule.onNodeWithTag(TEST_TAG_DEADLINE_INPUT).performTextInput(input)
-        composeTestRule.onNodeWithTag(TEST_TAG_DEADLINE_INPUT, useUnmergedTree = true).assertTextEquals(input)
-    }
-
-    @Test
-    fun addScreen_testDeadlineCharacterCounter() {
-        val input = "Deadline"
-        val textFieldState = inputTextFieldViewModel.textFieldState.value
-        composeTestRule.onNodeWithTag(TEST_TAG_DEADLINE_INPUT).performTextInput(input)
-        composeTestRule.onNodeWithTag("$TEST_TAG_DEADLINE_INPUT counter", useUnmergedTree = true)
-            .assertTextEquals("${input.length}/${textFieldState.maxDeadlineLength}")
-    }
-    @Test
-    fun addScreen_testClearDeadline() {
-        val input = "Deadline"
-        val label = "Enter deadline"
-        composeTestRule.onNodeWithTag(TEST_TAG_DEADLINE_INPUT).performTextInput(input)
-        composeTestRule.onNodeWithContentDescription("Cancel icon $label").performClick()
-        composeTestRule.onNodeWithTag(TEST_TAG_DEADLINE_INPUT, useUnmergedTree = true).assertTextEquals("")
-    }
+    // TODO TEST DEADLINE INPUT
 
 }

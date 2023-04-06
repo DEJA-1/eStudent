@@ -38,7 +38,7 @@ fun ExamsScreen(
             backgroundIcon = R.drawable.exams,
             backgroundIconContentDescription = "Exams Icon",
             onCheckClicked = { duty -> viewModel.updateDutyIsCompleted(duty) },
-            deleteDuty = {} //TODO Add deleteDuty() to DutyViewModel
+            deleteDuty = { duty -> viewModel.deleteDuty(duty) }
          )
     }
 }

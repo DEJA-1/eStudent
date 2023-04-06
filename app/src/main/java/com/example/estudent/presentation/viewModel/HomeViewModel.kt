@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.estudent.data.repository.EStudentDatabaseRepositoryImpl
 import com.example.estudent.domain.model.Duty
 import com.example.estudent.domain.repository.EStudentDatabaseRepository
+import com.example.estudent.domain.use_case.DatabaseUseCases
+import com.example.estudent.domain.use_case.DeleteDutyUseCase
 import com.example.estudent.domain.use_case.GetAllDutiesUseCase
 import com.example.estudent.domain.use_case.UpdateDutyUseCase
 import com.example.estudent.presentation.state.DutyUiState
@@ -17,9 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllDutiesUseCase: GetAllDutiesUseCase,
-    private val updateDutyUseCase: UpdateDutyUseCase,
-    private val repository: EStudentDatabaseRepository
+    private val databaseUseCases: DatabaseUseCases
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DutyUiState())
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
 
-        getAllDutiesUseCase().collect { result ->
+        databaseUseCases.getAllDutiesUseCase().collect { result ->
             _uiState.update {
                 it.copy(duties = result, isLoading = false)
            }
@@ -42,10 +42,10 @@ class HomeViewModel @Inject constructor(
     }
     fun updateDutyIsCompleted(duty: Duty) = viewModelScope.launch {
         val updatedDuty = duty.copy(isCompleted = !duty.isCompleted)
-        updateDutyUseCase(updatedDuty)
+        databaseUseCases.updateDutyUseCase(updatedDuty)
     }
 
     fun deleteDuty(duty: Duty) = viewModelScope.launch {
-        repository.deleteDuty(duty)
+        databaseUseCases.deleteDutyUseCase(duty)
     }
 }

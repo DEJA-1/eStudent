@@ -40,7 +40,7 @@ class EStudentDaoTest {
         val categories = listOf("Projects", "Exams", "Tasks")
         val category = "Projects"
         repeat(10) {
-            dao.insertDuty(Duty(id = it, category = categories.random()))
+            dao.insertDuty(Duty(id = it, category = categories.random(), title = "title", description = "description"))
         }
         val duties = dao.getDutiesByCategory(category).first()
         duties.forEach { duty ->
@@ -51,7 +51,7 @@ class EStudentDaoTest {
 
     @Test
     fun dao_insertDuty() = runTest {
-        val duty = Duty(id = 3)
+        val duty = Duty(id = 3, title = "", description = "")
         dao.insertDuty(duty)
 
         val duties = dao.getAllDuties().first()
@@ -60,7 +60,7 @@ class EStudentDaoTest {
 
     @Test
     fun dao_deleteDuty() = runTest {
-        val duty = Duty(id = 4)
+        val duty = Duty(id = 4, title = "title", description = "description")
         dao.insertDuty(duty)
         var duties = dao.getAllDuties().first()
         assertThat(duties).contains(duty)

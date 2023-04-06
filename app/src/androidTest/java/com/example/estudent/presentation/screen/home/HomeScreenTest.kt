@@ -30,7 +30,8 @@ class HomeScreenTest {
         composeTestRule.setContent {
             MaterialTheme(colors = HomeScreenColorPaletteLight) {
                 HomeScreen(
-                    viewModel = hiltViewModel()
+                    viewModel = hiltViewModel(),
+                    navigateToAddScreen = { }
                 )
             }
         }

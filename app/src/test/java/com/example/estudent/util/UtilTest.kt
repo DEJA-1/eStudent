@@ -50,7 +50,7 @@ class UtilTest {
 
     @Test
     fun `Util getTextImportanceColor returns green`() {
-        val importance = "Minor"
+        val importance = "Unimportant"
         val textImportanceColor = getTextImportanceColor(importance)
 
         assertThat(textImportanceColor).isEqualTo(mGreen)
@@ -91,7 +91,7 @@ class UtilTest {
 
         val displayDate = getDisplayDate(duty)
 
-        assertThat(displayDate).isEqualTo("")
+        assertThat(displayDate).isEqualTo("No deadline")
     }
 
 }

@@ -35,7 +35,7 @@ fun TasksScreen(
             backgroundIcon = R.drawable.tasks,
             backgroundIconContentDescription = "Tasks Icon",
             onCheckClicked = { duty -> viewModel.updateDutyIsCompleted(duty = duty) },
-            deleteDuty = {} //TODO Add deleteDuty() to DutyViewModel
+            deleteDuty = { duty -> viewModel.deleteDuty(duty) }
         )
     }
 

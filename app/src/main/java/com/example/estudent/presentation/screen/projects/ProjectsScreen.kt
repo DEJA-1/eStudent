@@ -35,7 +35,7 @@ fun ProjectsScreen(
             backgroundIcon = com.example.estudent.R.drawable.projects,
             backgroundIconContentDescription = "Projects Icon",
             onCheckClicked = { duty -> viewModel.updateDutyIsCompleted(duty) },
-            deleteDuty = {} //TODO Add deleteDuty() to DutyViewModel
+            deleteDuty = { duty -> viewModel.deleteDuty(duty) }
         )
     }
 }
