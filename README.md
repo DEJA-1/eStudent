@@ -1,6 +1,6 @@
 # eStudent
 
-  - Neat and intuitive UI (design: ig @zusrysuje)
+  - Neat and intuitive UI
 
 ![image](https://user-images.githubusercontent.com/83213476/229849944-361cccd1-5d5e-4857-93c6-48ae6e476cf6.png)
 
