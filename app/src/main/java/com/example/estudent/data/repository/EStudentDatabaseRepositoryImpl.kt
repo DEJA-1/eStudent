@@ -24,20 +24,13 @@ class EStudentDatabaseRepositoryImpl @Inject constructor(
         dao.updateDuty(duty)
     }
 
-    override fun getAllDuties(): Flow<List<Duty>> = flow {
-        dao.getAllDuties().flowOn(Dispatchers.IO)
-            .collect { duties ->
-                Log.d("Database", "Fetched ${duties.size} duties from the database: $duties")
-                emit(duties)
-            }
-    }
+    override fun getAllDuties(): Flow<List<Duty>> =
+        dao.getAllDuties().flowOn(Dispatchers.IO).conflate()
 
-    override fun getDutiesByCategory(category: String): Flow<List<Duty>> = flow {
-        dao.getDutiesByCategory(category).flowOn(Dispatchers.IO)
-            .collect { duties ->
-                Log.d("Database", "Fetched ${duties.size} duties from the database: $duties")
-                emit(duties)
-            }
-    }
+
+
+    override fun getDutiesByCategory(category: String): Flow<List<Duty>> =
+        dao.getDutiesByCategory(category).flowOn(Dispatchers.IO).conflate()
+
 
 }
