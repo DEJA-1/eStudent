@@ -5,6 +5,8 @@ import com.example.estudent.MainCoroutineRule
 import com.example.estudent.data.repository.FakeEStudentDatabaseRepositoryImpl
 import com.example.estudent.domain.model.Duty
 import com.example.estudent.domain.repository.EStudentDatabaseRepository
+import com.example.estudent.domain.use_case.DatabaseUseCases
+import com.example.estudent.domain.use_case.DeleteDutyUseCase
 import com.example.estudent.domain.use_case.GetAllDutiesUseCase
 import com.example.estudent.domain.use_case.GetDutiesByCategoryUseCase
 import com.example.estudent.domain.use_case.UpdateDutyUseCase
@@ -25,16 +27,24 @@ class DutyViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var viewModel: DutyViewModel
-    private lateinit var getDutiesByCategoryUseCase: GetDutiesByCategoryUseCase
+    private lateinit var databaseUseCases: DatabaseUseCases
     private lateinit var fakeRepository: EStudentDatabaseRepository
     private lateinit var updateDutyUseCase: UpdateDutyUseCase
+    private lateinit var getDutiesByCategoryUseCase: GetDutiesByCategoryUseCase
+    private lateinit var getAllDutiesUseCase: GetAllDutiesUseCase
+    private lateinit var deleteDutyUseCase: DeleteDutyUseCase
+
 
     @Before
     fun setup() {
         fakeRepository = FakeEStudentDatabaseRepositoryImpl()
-        getDutiesByCategoryUseCase = GetDutiesByCategoryUseCase(fakeRepository)
         updateDutyUseCase = UpdateDutyUseCase(fakeRepository)
-        viewModel = DutyViewModel(getDutiesByCategoryUseCase, updateDutyUseCase)
+        getDutiesByCategoryUseCase = GetDutiesByCategoryUseCase(fakeRepository)
+        getAllDutiesUseCase = GetAllDutiesUseCase(fakeRepository)
+        deleteDutyUseCase = DeleteDutyUseCase(fakeRepository)
+        databaseUseCases = DatabaseUseCases(getAllDutiesUseCase, getDutiesByCategoryUseCase, updateDutyUseCase, deleteDutyUseCase)
+
+        viewModel = DutyViewModel(databaseUseCases)
     }
 
     @Test
