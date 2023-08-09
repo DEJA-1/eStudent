@@ -1,4 +1,8 @@
 # eStudent
+A personal planner for students providing clean, readable and intuitive way to manage
+college duties. The user can categorize tasks, assign priority levels, indicate difficulty, and
+set deadlines of the task to reflect its requirements. In addition, the user can write notes
+about the duty. The UI of this application is animated.
 
   - Neat and intuitive UI
 
